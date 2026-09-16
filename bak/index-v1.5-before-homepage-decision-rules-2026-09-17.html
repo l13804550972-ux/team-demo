@@ -673,7 +673,7 @@
     <div class="ew-brand"><span class="ew-brand-mark">E</span><span>Everlife 工作台</span></div>
     <div class="ew-top-context">
       <span class="ew-project-name">Everlife｜产品设计与交付</span>
-      <span class="ew-version">v1.6</span>
+      <span class="ew-version">v1.5</span>
       <span class="ew-status-chip">共创中</span>
     </div>
     <div class="ew-top-actions">
@@ -753,7 +753,7 @@
               </div>
               <span class="ew-health-status" id="ew-recipe-status">8 个步骤 · 旅程完整</span>
             </div>
-            <div class="ew-empathy-strip" aria-label="健康 NOW 首页决策规则"><div class="ew-empathy-head"><strong>健康 NOW 首页决策</strong><span>身份 × 数据 × 阶段 × 事件</span></div><div class="ew-empathy-grid"><div class="ew-empathy-item"><div class="ew-empathy-label">用户此刻在想</div><div class="ew-empathy-value" id="ew-empathy-thought">今天到底做什么？</div></div><div class="ew-empathy-item"><div class="ew-empathy-label">系统真实掌握</div><div class="ew-empathy-value" id="ew-empathy-known">正在接受专项管理</div></div><div class="ew-empathy-item"><div class="ew-empathy-label">健康 NOW 首次回应</div><div class="ew-empathy-value" id="ew-empathy-response">今天，先走 10 分钟</div></div></div></div>
+            <div class="ew-empathy-strip" aria-label="健康 NOW 初体验依据"><div class="ew-empathy-head"><strong>健康 NOW 初体验</strong><span>懂你，才回应</span></div><div class="ew-empathy-grid"><div class="ew-empathy-item"><div class="ew-empathy-label">用户此刻在想</div><div class="ew-empathy-value" id="ew-empathy-thought">今天到底做什么？</div></div><div class="ew-empathy-item"><div class="ew-empathy-label">系统确实知道</div><div class="ew-empathy-value" id="ew-empathy-known">正在接受专项管理</div></div><div class="ew-empathy-item"><div class="ew-empathy-label">健康 NOW 首次回应</div><div class="ew-empathy-value" id="ew-empathy-response">今天，先走 10 分钟</div></div></div></div>
             <div class="ew-assembly-summary" aria-label="装配结果说明">
               <div class="ew-summary-card"><div class="ew-summary-label">可点击原型</div><div class="ew-summary-value" id="ew-summary-screens">6 屏</div><div class="ew-summary-note" id="ew-summary-journey">从登录授权走到下一步服务</div></div>
               <div class="ew-summary-card"><div class="ew-summary-label">系统自动完成</div><div class="ew-summary-value" id="ew-summary-system">2 项</div><div class="ew-summary-note">匹配、判断与路由不画成页面</div></div>
@@ -1038,27 +1038,26 @@
         {id:'J07',priority:'core',title:'会员／多服务用户',meta:'核心用户 · 已付费 · 多关系',desc:'统一查看 Everlife 会员身份、业务权益包、多个服务项目、订单、团队和售后，不与健康结果重复建设。',modules:['ID-01','ID-03','HOME-01','MB-01','MB-02','SV-05','SV-06','CM-04','PAY-07','AI-01'],source:'既有医疗客户',theme:'暂无专项',service:'通用',stage:'执行中',data:'完整',depth:'深度',goal:'membership'},
         {id:'J01',priority:'core',title:'线下检测用户',meta:'核心用户 · 已消费 · 待承接',desc:'完成检测后等待报告；报告生成时先看结论、异常值与原始报告，再进入行动、复查或服务。',modules:['ID-01','ID-03','ID-04','HOME-01','HD-01','HD-02','HD-04','HD-03','ISSUE-01','ACT-01','SV-01','NT-01'],source:'线下检测客户',theme:'糖胖管理',service:'通用',stage:'待解读',data:'等待',depth:'免费',goal:'report'},
         {id:'J03',priority:'focus',title:'企业／团检用户',meta:'重点用户 · 组织付费',desc:'区分个人健康资料与组织提供的服务或权益；个人报告只按授权展示，组织关系不扩大健康数据权限。',modules:['ID-01','RT-01','ID-02','ID-03','ID-04','HOME-01','HD-01','HD-02','HD-04','ISSUE-01','MB-02','SV-01','NT-01'],source:'团检客户',theme:'敏感肠胃',service:'通用',stage:'待解读',data:'完整',depth:'专项',goal:'report'},
-        {id:'J02',priority:'focus',title:'已有健康记录用户',meta:'重点用户 · 已有记录',desc:'已有历史报告、检查或就诊记录但暂无进行中服务；首页根据趋势、复查节点、数据时效或稳定状态给出唯一下一步。',modules:['ID-01','ID-03','ID-04','HOME-01','HD-02','HD-04','HD-06','ISSUE-01','AI-01','RT-04'],source:'既有医疗客户',theme:'血管斑块',service:'通用',stage:'待复测',data:'完整',depth:'免费',goal:'report'},
+        {id:'J02',priority:'focus',title:'既有健康档案用户',meta:'重点用户 · 已有关系',desc:'已有历史报告或就诊档案但暂无进行中服务，首页根据新结果、复查到期或健康重点给出唯一下一步。',modules:['ID-01','ID-03','ID-04','HOME-01','HD-02','HD-04','HD-06','ISSUE-01','AI-01','RT-04'],source:'既有医疗客户',theme:'血管斑块',service:'通用',stage:'待复测',data:'完整',depth:'免费',goal:'report'},
         {id:'J06',priority:'compatible',title:'已登录无数据用户',meta:'兼容用户 · 待建档',desc:'已有账户但暂时没有可用健康数据，通过上传、关联设备或短问答渐进补充，不强迫一次填完。',modules:['ID-01','ID-03','HOME-01','AI-03','IN-01','AI-01','RT-04'],source:'公域新客',theme:'暂无专项',service:'通用',stage:'待解读',data:'无',depth:'免费',goal:'free-plan'},
         {id:'J05',priority:'compatible',title:'公域游客',meta:'兼容用户 · 低门槛体验',desc:'无需先注册即可有限咨询或上传报告；需要保存、持续追踪和深度服务时再完成登录与授权。',modules:['ID-01','RT-01','HOME-01','AI-03','AI-01','IN-01'],source:'公域新客',theme:'暂无专项',service:'通用',stage:'待解读',data:'无',depth:'免费',goal:'free-plan'},
         {id:'JX',priority:'exception',title:'异常状态用户',meta:'全旅程必备 · 异常恢复',desc:'横跨所有代表用户，覆盖身份、报告、权益、设备、方案、支付和服务异常，并帮助用户回到原任务。',modules:['ID-01','ID-02','ID-03','ID-04','HOME-01','AI-04','AI-05','PAY-06','PAY-07','NT-01'],source:'线下检测客户',theme:'暂无专项',service:'通用',stage:'待解读',data:'少量',depth:'免费',goal:'report'}
       ];
 
       const firstExperiences = {
-        J04:{thought:'今天做什么，最近有没有变好？',known:'执行第 12 天 · 已完成 8 天 · 昨日调整方案',title:'今天先完成餐后步行',fact:'健管师已根据昨天的记录调整安排',basis:'糖胖管理 · 执行中',card:'<div class="ew-phone-row"><span>当前进度</span><strong style="color:#315f50">第 12 天</strong></div><div class="ew-phone-row"><span>阶段复测</span><strong style="color:#202321">还有 9 天</strong></div>',action:'查看今天的安排'},
-        J07:{thought:'有哪些服务和权益，哪些快到期？',known:'2 项服务进行中 · 5 项权益可用 · 1 项临期',title:'你有 1 项权益快到期',fact:'建议优先预约使用，避免错过有效期',basis:'服务与权益记录',card:'<div class="ew-phone-row"><span>进行中服务</span><strong style="color:#202321">2 项</strong></div><div class="ew-phone-row"><span>可用权益</span><strong style="color:#315f50">5 项</strong></div><div class="ew-phone-row"><span>9 月 30 日到期</span><strong style="color:#9a5f16">1 项</strong></div>',action:'立即预约'},
-        J01:{thought:'报告什么时候出来，结果有没有问题？',known:'已完成 17 / 22 项 · 暂未发现紧急风险',title:'报告还差 5 项',fact:'预计今天 18:00 完成，完成后小 mo 会提醒你',basis:'本次检测进度',card:'<div class="ew-phone-row"><span>已完成结果</span><strong style="color:#315f50">17 / 22</strong></div><div class="ew-phone-row"><span>预计完成</span><strong style="color:#202321">今天 18:00</strong></div>',action:'完成后提醒我'},
-        J03:{thought:'公司能看到报告吗，发现问题后有人管吗？',known:'团检关系已识别 · 个人授权有效 · 2 项后续服务',title:'报告只对你开放',fact:'组织仅查看约定的汇总信息',basis:'本次授权范围',card:'<div class="ew-phone-row"><span>个人报告</span><strong style="color:#315f50">仅本人可见</strong></div><div class="ew-phone-row"><span>企业提供</span><strong style="color:#202321">2 项后续服务</strong></div>',action:'查看我的报告'},
-        J02:{thought:'最近有什么变化，哪些值得留意？',known:'3 次健康记录 · 12 项指标可比较',title:'目前没有需要优先处理的问题',fact:'3 项关键指标保持稳定',basis:'历史健康记录',card:'<div class="ew-phone-row"><span>可比较记录</span><strong style="color:#315f50">3 次</strong></div><div class="ew-phone-row"><span>下次建议更新</span><strong style="color:#202321">6 个月后</strong></div>',action:'看看变化'},
-        J06:{thought:'你都不了解我，能做什么？',known:'已登录 · 暂无健康记录',title:'我先听你说',fact:'最近，有什么让你不太舒服或不太放心吗？',basis:'说一点就好，不用一次讲清楚',card:'<div class="ew-phone-row"><span>身体有点不舒服</span><strong style="color:#202321">说说看</strong></div><div class="ew-phone-row"><span>报告看不明白</span><strong style="color:#202321">发给小 mo</strong></div>',action:'说说近况'},
-        J05:{thought:'先看看有没有用',known:'游客状态 · 尚未授权 · 信息不自动入档',title:'不用注册，先试一次',fact:'你可以先问一个问题，或发一张报告',basis:'游客体验',card:'<div class="ew-phone-row"><span>看看报告</span><strong style="color:#202321">›</strong></div><div class="ew-phone-row"><span>问问近况</span><strong style="color:#202321">›</strong></div><div class="ew-phone-row"><span>调整生活</span><strong style="color:#202321">›</strong></div><div class="ew-phone-row"><span>了解服务</span><strong style="color:#202321">›</strong></div>',action:'问小 mo'},
-        JX:{thought:'别让我重新来一次',known:'资料已保留 · 停在报告关联步骤',title:'报告暂时没有关联成功',fact:'确认检测日期后，可以从这里继续',basis:'当前处理进度',card:'<div class="ew-phone-row"><span>已保留</span><strong style="color:#315f50">上传资料</strong></div><div class="ew-phone-row"><span>还需要</span><strong style="color:#9a5f16">确认检测日期</strong></div>',action:'继续关联'}
+        J04:{thought:'今天到底做什么？',known:'专项管理进行中 · 昨日有记录',title:'今天，先走 10 分钟',fact:'已按今天的安排调整',basis:'糖胖管理 · 执行中',action:'开始行动'},
+        J07:{thought:'我买过什么、还能用什么？',known:'2 项服务 · 1 个权益包',title:'你有 2 项服务在进行',fact:'一项权益本月到期',basis:'订单与权益记录',action:'查看我的服务'},
+        J01:{thought:'报告什么时候出来？',known:'本次检测已完成 17 / 22 项',title:'报告还差 5 项',fact:'预计今天 18:00 完成',basis:'本次检测进度',action:'完成后提醒我'},
+        J03:{thought:'公司能看到我的报告吗？',known:'团检关系已识别 · 个人授权有效',title:'报告只对你可见',fact:'企业仅查看约定的汇总信息',basis:'本次授权范围',action:'查看我的报告'},
+        J02:{thought:'以前的问题现在怎么样？',known:'已有两次可比报告',title:'有一项比上次高',fact:'已对比 3 月与 9 月结果',basis:'历史健康档案',action:'看看变化'},
+        J06:{thought:'你都不了解我，能做什么？',known:'已登录 · 暂无健康资料',title:'我还不够了解你',fact:'先补一项就可以',basis:'当前资料完整度',action:'告诉小 mo'},
+        J05:{thought:'先看看有没有用。',known:'游客状态 · 尚未授权资料',title:'先说说你关心什么',fact:'无需注册也可以开始',basis:'游客模式',action:'问小 mo'},
+        JX:{thought:'别让我重新来一次。',known:'资料已保留 · 关联未完成',title:'资料没有丢失',fact:'补充一项信息后继续',basis:'当前处理进度',action:'继续处理'}
       };
 
-      const releaseVersion = {date:'2026-09-17 00:45',name:'工作台 V1.6 首页决策规则',change:'八类代表用户由固定文案升级为“身份、数据、阶段、事件”驱动的首页规则；更新真实担忧、系统依据、首次回应和唯一重点任务。',status:'共创中'};
+      const releaseVersion = {date:'2026-09-17 00:15',name:'工作台 V1.5 默认入口规则',change:'每次打开工作台默认进入首页；方案设计的代表用户入口默认收起；切换代表用户后默认选中并展示首页重点任务。',status:'共创中'};
       const versions = [
         releaseVersion,
-        {date:'2026-09-17 00:15',name:'工作台 V1.5 默认入口规则',change:'每次打开工作台默认进入首页；方案设计的代表用户入口默认收起；切换代表用户后默认选中并展示首页重点任务。',status:'已记录'},
         {date:'2026-09-16 23:55',name:'工作台 V1.4 初体验与原型聚焦',change:'初体验三项合并为醒目整体；首页重点任务独立标识；手机原型移至右侧并在切换用户时优先展示入口任务。',status:'已记录'},
         {date:'2026-09-16 23:30',name:'工作台 V1.3 健康 NOW 初体验',change:'为八类代表用户增加“心里话—已知事实—首次回应”；手机首屏收紧为一句判断、一个事实和一个主操作。',status:'已记录'},
         {date:'2026-09-16 23:00',name:'工作台 V1.2 默认折叠代表用户',change:'代表用户分组在每次打开工作台时默认折叠，由使用者按需展开，减少左侧导航占用。',status:'已记录'},
@@ -1077,8 +1076,8 @@
         {date:'2026-08-25 13:30',name:'三条参考旅程 V0.4',change:'验证本地体检、异地高价值、公域新客共用同一内核，通过配方改变首页与下一步。',status:'待确认'}
       ];
 
-      const STORAGE_KEY = 'everlife-design-workbench-v1.6';
-      const LEGACY_STORAGE_KEY = 'everlife-design-workbench-v1.5';
+      const STORAGE_KEY = 'everlife-design-workbench-v1.5';
+      const LEGACY_STORAGE_KEY = 'everlife-design-workbench-v1.4';
       const state = {page:'home',viewMode:'business',appTab:'health',openGroup:'',solutionUsersOpen:false,recipe:'J04',selected:'HOME-01',depth:'专项',goal:'managed-service',filter:'全部',query:'',added:[],dataFilter:'全部',dataQuery:'',dataSelected:'BO-01',dataTech:false,userState:{data:'usable',stage:'action',event:'service',identity:'managed'} };
       const byId = id => modules.find(m => m.id === id);
       const currentRecipe = () => recipes.find(r => r.id === state.recipe) || recipes[0];
@@ -1103,7 +1102,7 @@
 
       function captureWorkspace() {
         return {
-          workbench_version:'1.6',
+          workbench_version:'1.5',
           saved_at:new Date().toISOString(),
           state:{...state,added:[...state.added]},
           recipes:recipes.map(r=>({...r,modules:[...r.modules]})),
@@ -1320,7 +1319,7 @@
           'HD-03':['查看完整报告','原始报告保持连续阅读，目录只帮助定位，不把内容拆成多次跳转。','<div class="ew-phone-row"><span>报告页数</span><strong style="color:#202321">共 18 页</strong></div><div class="ew-phone-row"><span>当前阅读</span><strong style="color:#315f50">第 1 页</strong></div>','继续阅读'],
           'HD-04':indicatorView,
           'IN-01':['一次只补充一点','不用填写整份长问卷，先回答当前阶段最需要的 3 个问题。','<div class="ew-phone-row"><span>本次需要</span><strong style="color:#202321">生活状态与执行限制</strong></div><div class="ew-phone-row"><span>预计用时</span><strong style="color:#315f50">约 1 分钟</strong></div>','开始回答'],
-          'HOME-01':[experience.title,experience.fact,experience.card || `<div class="ew-phone-row"><span>判断依据</span><strong style="color:#315f50">${experience.basis}</strong></div>`,experience.action],
+          'HOME-01':[experience.title,experience.fact,`<div class="ew-phone-row"><span>判断依据</span><strong style="color:#315f50">${experience.basis}</strong></div>`,experience.action],
           'SV-01':[`你可以这样开始`,`按你需要的支持强度选择，${state.depth}方案已放在最前。`,'<div class="ew-phone-row"><span>7 天生活方案</span><strong style="color:#315f50">免费</strong></div><div class="ew-phone-row"><span>专项管理</span><strong style="color:#202321">查看价格</strong></div><div class="ew-phone-row"><span>深度服务</span><strong style="color:#202321">评估适用性</strong></div>','选择支持方式'],
           'PL-01':['开始前，先确认是否适合你','过敏、用药和身体情况会影响生活建议与营养素配制。','<div class="ew-phone-row"><span>过敏与忌口</span><strong style="color:#202321">待确认</strong></div><div class="ew-phone-row"><span>正在使用的药物</span><strong style="color:#202321">待确认</strong></div>','完成安全确认'],
           'SV-02':['先确认这套营养支持适合你','营养素不能只按一个异常值推荐，需要结合报告、用药、过敏和专业复核。','<div class="ew-phone-row"><span>资料完整度</span><strong style="color:#9a5f16">需补 2 项</strong></div><div class="ew-phone-row"><span>专业复核</span><strong style="color:#202321">购买前完成</strong></div>','继续评估'],
@@ -1631,7 +1630,7 @@
             const payload={...captureWorkspace(),versions}; downloadJson(payload,'everlife-workbench-backup.json'); toast('工作台备份已导出');
           }
           if (action.dataset.action==='export') {
-            const payload={workbench_version:'1.6',scenario:currentRecipe().id,title:currentRecipe().title,config:{source:root.querySelector('#ew-source').value,theme:root.querySelector('#ew-theme').value,service_template:root.querySelector('#ew-service').value,service_stage:root.querySelector('#ew-stage').value,support_level:state.depth,data:root.querySelector('#ew-data').value,goal:state.goal},prototype_screens:prototypeModuleIds(),journey_steps:activeModuleIds().map(id=>{const m=byId(id);return{id:m.id,name:m.name,readiness:readiness(m.maturity),technical_level:m.maturity,visible_in_prototype:isPrototypeScreen(m),dependencies:m.deps};})};
+            const payload={workbench_version:'1.5',scenario:currentRecipe().id,title:currentRecipe().title,config:{source:root.querySelector('#ew-source').value,theme:root.querySelector('#ew-theme').value,service_template:root.querySelector('#ew-service').value,service_stage:root.querySelector('#ew-stage').value,support_level:state.depth,data:root.querySelector('#ew-data').value,goal:state.goal},prototype_screens:prototypeModuleIds(),journey_steps:activeModuleIds().map(id=>{const m=byId(id);return{id:m.id,name:m.name,readiness:readiness(m.maturity),technical_level:m.maturity,visible_in_prototype:isPrototypeScreen(m),dependencies:m.deps};})};
             downloadJson(payload,`everlife-${currentRecipe().id.toLowerCase()}-handoff.json`); toast('已导出当前场景的交付清单');
           }
           if (action.dataset.action==='export-dictionary') {
