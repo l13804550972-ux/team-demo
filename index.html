@@ -9,7 +9,7 @@
   <style>html,body{margin:0;min-height:100%;background:#f4f3ee}body{box-sizing:border-box;padding:12px}</style>
 </head>
 <body>
-<div id="everlife-workbench-v0" class="ew-shell" data-view-mode="business" data-active-page="assembly">
+<div id="everlife-workbench-v0" class="ew-shell" data-view-mode="business" data-active-page="home">
   <style>
     html, body { margin: 0; min-height: 100%; background: #f4f3ee; }
     #everlife-workbench-v0 {
@@ -196,6 +196,9 @@
     #everlife-workbench-v0 .ew-nav-button.is-active { background: var(--ew-ivory); color: var(--ew-ink); box-shadow: inset 0 0 0 1px var(--ew-line); }
     #everlife-workbench-v0 .ew-nav-icon { width: 18px; text-align: center; color: var(--ew-faint); }
     #everlife-workbench-v0 .ew-nav-count { margin-left: auto; font-variant-numeric: tabular-nums; color: var(--ew-faint); font-size: 11px; }
+    #everlife-workbench-v0 .ew-nav-status { width:8px; height:8px; margin-left:auto; border-radius:50%; background:var(--ew-warning); box-shadow:0 0 0 3px var(--ew-warning-soft); }
+    #everlife-workbench-v0 .ew-solution-users { display:none; margin:2px 5px 10px 25px; padding:7px 0 7px 10px; border-left:1px solid var(--ew-line); }
+    #everlife-workbench-v0[data-active-page="assembly"] .ew-solution-users { display:grid; gap:5px; }
     #everlife-workbench-v0 .ew-recipe-list {
       padding: 5px 12px 14px;
       display: grid;
@@ -223,6 +226,27 @@
     #everlife-workbench-v0 .ew-recipe-button:nth-child(4) .ew-recipe-dot { background: var(--ew-warning); }
     #everlife-workbench-v0 .ew-recipe-title { font-weight: 620; font-size: 12px; }
     #everlife-workbench-v0 .ew-recipe-meta { color: var(--ew-faint); font-size: 10px; margin-top: 2px; }
+    #everlife-workbench-v0 .ew-user-groups { display:grid; gap:5px; }
+    #everlife-workbench-v0 .ew-user-group { display:block; }
+    #everlife-workbench-v0 .ew-user-group-label { width:100%; display:flex; align-items:center; gap:7px; padding:6px 5px; border:0; border-radius:6px; background:transparent; color:var(--ew-faint); font:inherit; font-size:9px; font-weight:720; text-align:left; cursor:pointer; }
+    #everlife-workbench-v0 .ew-user-group-label:hover { background:#efeee8; color:var(--ew-ink); }
+    #everlife-workbench-v0 .ew-user-group-label::before { content:""; width:7px; height:7px; border-radius:2px; background:currentColor; }
+    #everlife-workbench-v0 .ew-user-group-label::after { content:"›"; margin-left:auto; transform:rotate(0); transition:transform 150ms ease; }
+    #everlife-workbench-v0 .ew-user-group.is-open .ew-user-group-label::after { transform:rotate(90deg); }
+    #everlife-workbench-v0 .ew-user-group-count { margin-left:2px; font-weight:500; opacity:.7; }
+    #everlife-workbench-v0 .ew-user-group-list { display:none; gap:3px; padding:3px 0 3px 5px; }
+    #everlife-workbench-v0 .ew-user-group.is-open .ew-user-group-list { display:grid; }
+    #everlife-workbench-v0 .ew-user-group-list .ew-recipe-button { min-height:39px; padding:6px 7px; background:transparent; }
+    #everlife-workbench-v0 .ew-user-group-list .ew-recipe-button.is-active { box-shadow:inset 3px 0 0 currentColor; }
+    #everlife-workbench-v0 .ew-solution-current { margin-bottom:3px; padding:7px; border-radius:8px; background:var(--ew-green-soft); color:#476559; font-size:9px; line-height:1.45; }
+    #everlife-workbench-v0 .ew-user-group[data-priority="core"] .ew-recipe-dot { background:var(--ew-green); }
+    #everlife-workbench-v0 .ew-user-group[data-priority="focus"] .ew-recipe-dot { background:var(--ew-blue); }
+    #everlife-workbench-v0 .ew-user-group[data-priority="compatible"] .ew-recipe-dot { background:#96958e; }
+    #everlife-workbench-v0 .ew-user-group[data-priority="exception"] .ew-recipe-dot { background:#ad5d52; }
+    #everlife-workbench-v0 .ew-user-group[data-priority="core"] .ew-user-group-label { color:var(--ew-green); }
+    #everlife-workbench-v0 .ew-user-group[data-priority="focus"] .ew-user-group-label { color:var(--ew-blue); }
+    #everlife-workbench-v0 .ew-user-group[data-priority="compatible"] .ew-user-group-label { color:#777871; }
+    #everlife-workbench-v0 .ew-user-group[data-priority="exception"] .ew-user-group-label { color:#a14f45; }
     #everlife-workbench-v0 .ew-sidebar-note {
       margin: auto 12px 14px;
       padding: 10px 11px;
@@ -333,10 +357,18 @@
     #everlife-workbench-v0 .ew-flow-state { margin-top: 3px; color: var(--ew-faint); font-size: 9px; }
     #everlife-workbench-v0 .ew-flow-arrow { width: 24px; height: 1px; background: #c9c6bd; position: relative; }
     #everlife-workbench-v0 .ew-flow-arrow::after { content: ""; position: absolute; right: -1px; top: -3px; width: 6px; height: 6px; border-top: 1px solid #aaa79e; border-right: 1px solid #aaa79e; transform: rotate(45deg); }
+    #everlife-workbench-v0 .ew-swimlanes { display:grid; gap:7px; padding:12px 0 18px; }
+    #everlife-workbench-v0 .ew-swimlane { display:grid; grid-template-columns:86px minmax(0,1fr); gap:10px; align-items:stretch; }
+    #everlife-workbench-v0 .ew-swimlane-label { display:flex; align-items:center; gap:7px; color:var(--ew-muted); font-size:10px; font-weight:680; }
+    #everlife-workbench-v0 .ew-swimlane-label::before { content:""; width:8px; height:8px; border-radius:3px; background:var(--ew-green); }
+    #everlife-workbench-v0 .ew-swimlane[data-lane="system"] .ew-swimlane-label::before { background:#68789d; }
+    #everlife-workbench-v0 .ew-swimlane[data-lane="service"] .ew-swimlane-label::before { background:#a76c2b; }
+    #everlife-workbench-v0 .ew-swimlane-track { display:flex; align-items:center; min-height:66px; padding:7px; overflow-x:auto; border:1px solid var(--ew-line-soft); border-radius:11px; background:rgba(255,255,255,.48); }
+    #everlife-workbench-v0 .ew-swimlane-empty { color:var(--ew-faint); font-size:9px; padding:0 8px; }
     #everlife-workbench-v0 .ew-preview-stage {
       min-height: 365px;
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 236px;
+      grid-template-columns: minmax(0, 1fr) 316px;
       gap: 18px;
       align-items: start;
     }
@@ -346,7 +378,7 @@
       background: rgba(255, 254, 250, 0.84);
       overflow: hidden;
     }
-    #everlife-workbench-v0 .ew-prototype-column { width: 236px; }
+    #everlife-workbench-v0 .ew-prototype-column { width: 316px; }
     #everlife-workbench-v0 .ew-stage-head { height: 38px; display: flex; align-items: center; gap: 6px; padding: 0 12px; border-bottom: 1px solid var(--ew-line-soft); color: var(--ew-muted); font-size: 10px; }
     #everlife-workbench-v0 .ew-stage-head .ew-stage-progress { margin-left: auto; color: var(--ew-ink); font-variant-numeric: tabular-nums; }
     #everlife-workbench-v0 .ew-window-dot { width: 6px; height: 6px; border-radius: 50%; background: #cbc8bf; }
@@ -359,16 +391,16 @@
     #everlife-workbench-v0 .ew-contract-key { color: var(--ew-faint); font-size: 9px; text-transform: uppercase; letter-spacing: 0.06em; }
     #everlife-workbench-v0 .ew-contract-value { margin-top: 5px; font-size: 11px; color: var(--ew-muted); }
     #everlife-workbench-v0 .ew-phone {
-      width: 220px;
-      min-height: 422px;
+      width: 294px;
+      min-height: 574px;
       margin: 0 auto;
       padding: 7px;
-      border-radius: 28px;
+      border-radius: 36px;
       border: 1px solid #c9c6bd;
       background: #232624;
       box-shadow: 0 16px 36px rgba(32, 35, 33, 0.14);
     }
-    #everlife-workbench-v0 .ew-phone-screen { min-height: 406px; border-radius: 22px; overflow: hidden; background: var(--ew-paper); }
+    #everlife-workbench-v0 .ew-phone-screen { min-height: 558px; border-radius: 29px; overflow: hidden; background: var(--ew-paper); }
     #everlife-workbench-v0 .ew-phone-status { height: 28px; display: flex; align-items: center; justify-content: space-between; padding: 0 13px; color: var(--ew-muted); font-size: 8px; font-weight: 650; }
     #everlife-workbench-v0 .ew-phone-nav { display: flex; align-items: center; justify-content: space-between; padding: 4px 13px 9px; border-bottom: 1px solid var(--ew-line-soft); }
     #everlife-workbench-v0 .ew-phone-nav strong { font-size: 10px; }
@@ -474,6 +506,15 @@
     #everlife-workbench-v0 .ew-version-date { color: var(--ew-faint); font-variant-numeric: tabular-nums; }
     #everlife-workbench-v0 .ew-version-name { font-weight: 640; }
     #everlife-workbench-v0 .ew-version-change { margin-top: 4px; color: var(--ew-muted); }
+    #everlife-workbench-v0 .ew-source-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin:18px 0 28px; }
+    #everlife-workbench-v0 .ew-source-card { display:flex; flex-direction:column; min-height:150px; padding:15px; border:1px solid var(--ew-line); border-radius:12px; background:var(--ew-ivory); }
+    #everlife-workbench-v0 .ew-source-card.is-primary { border-color:#91a99e; box-shadow:inset 3px 0 0 var(--ew-green); }
+    #everlife-workbench-v0 .ew-source-type { color:var(--ew-green); font-size:9px; font-weight:720; letter-spacing:.06em; }
+    #everlife-workbench-v0 .ew-source-card h3 { margin:7px 0 5px; font-size:13px; }
+    #everlife-workbench-v0 .ew-source-card p { margin:0; color:var(--ew-muted); font-size:10px; line-height:1.55; }
+    #everlife-workbench-v0 .ew-source-impact { margin-top:auto; padding-top:10px; color:var(--ew-ink); font-size:9px; font-weight:620; }
+    #everlife-workbench-v0 .ew-source-link { align-self:flex-start; margin-top:10px; color:var(--ew-green); font-size:9px; text-decoration:none; }
+    #everlife-workbench-v0 .ew-source-link:hover { text-decoration:underline; }
     #everlife-workbench-v0 .ew-data-page { padding: 22px; overflow: auto; }
     #everlife-workbench-v0 .ew-data-layout { display: grid; grid-template-columns: 250px minmax(0,1fr); gap: 18px; align-items: start; }
     #everlife-workbench-v0 .ew-object-list { border-right: 1px solid var(--ew-line); padding-right: 14px; display: grid; gap: 4px; }
@@ -495,13 +536,85 @@
     #everlife-workbench-v0 .ew-data-tech-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
     #everlife-workbench-v0 .ew-data-tech-head strong { font-size: 12px; }
     #everlife-workbench-v0 .ew-empty { padding: 28px 0; color: var(--ew-muted); text-align: center; }
+    #everlife-workbench-v0 .ew-home-page, #everlife-workbench-v0 .ew-needs-page { padding:28px; overflow:auto; }
+    #everlife-workbench-v0 .ew-home-hero { display:flex; align-items:flex-end; justify-content:space-between; gap:24px; padding:8px 0 24px; border-bottom:1px solid var(--ew-line); }
+    #everlife-workbench-v0 .ew-home-hero h1 { max-width:680px; margin:5px 0 8px; font-family:Georgia,"Songti SC",serif; font-size:31px; font-weight:500; line-height:1.2; letter-spacing:-.025em; }
+    #everlife-workbench-v0 .ew-home-hero p { max-width:660px; margin:0; color:var(--ew-muted); font-size:13px; }
+    #everlife-workbench-v0 .ew-milestones { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:0; margin-top:12px; }
+    #everlife-workbench-v0 .ew-milestone { position:relative; padding:14px 14px 12px 22px; border-top:1px solid var(--ew-line); }
+    #everlife-workbench-v0 .ew-milestone::before { content:""; position:absolute; left:0; top:10px; width:9px; height:9px; border:3px solid var(--ew-ivory); border-radius:50%; background:var(--ew-green); box-shadow:0 0 0 1px var(--ew-green); }
+    #everlife-workbench-v0 .ew-milestone-date { color:var(--ew-green); font-size:10px; font-weight:700; }
+    #everlife-workbench-v0 .ew-milestone strong { display:block; margin:5px 0 3px; font-size:11px; }
+    #everlife-workbench-v0 .ew-milestone span { color:var(--ew-faint); font-size:9px; line-height:1.45; }
+    #everlife-workbench-v0 .ew-home-layout { display:grid; grid-template-columns:minmax(0,1.15fr) minmax(320px,.85fr); gap:18px; margin-top:18px; }
+    #everlife-workbench-v0 .ew-home-section { border:1px solid var(--ew-line); border-radius:14px; background:var(--ew-ivory); padding:18px; }
+    #everlife-workbench-v0 .ew-home-section h3 { margin:0; font-size:15px; }
+    #everlife-workbench-v0 .ew-home-section-head { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px; }
+    #everlife-workbench-v0 .ew-goal-card { padding:18px; border-radius:12px; background:#202622; color:#fff; }
+    #everlife-workbench-v0 .ew-goal-card small { color:#aeb9b2; }
+    #everlife-workbench-v0 .ew-goal-card strong { display:block; margin-top:8px; font-family:Georgia,"Songti SC",serif; font-size:20px; font-weight:500; }
+    #everlife-workbench-v0 .ew-focus-list, #everlife-workbench-v0 .ew-todo-list { display:grid; gap:7px; }
+    #everlife-workbench-v0 .ew-focus-item, #everlife-workbench-v0 .ew-todo-item { display:grid; grid-template-columns:26px minmax(0,1fr) auto; gap:9px; align-items:center; min-height:42px; padding:8px 9px; border-radius:9px; background:#f7f6f1; }
+    #everlife-workbench-v0 .ew-focus-item span:first-child { width:22px; height:22px; display:grid; place-items:center; border-radius:7px; background:var(--ew-green-soft); color:var(--ew-green); font-size:10px; font-weight:700; }
+    #everlife-workbench-v0 .ew-todo-dot { width:8px; height:8px; margin-left:7px; border-radius:50%; background:var(--ew-warning); }
+    #everlife-workbench-v0 .ew-item-title { font-weight:620; font-size:11px; }
+    #everlife-workbench-v0 .ew-item-meta { color:var(--ew-faint); font-size:9px; }
+    #everlife-workbench-v0 .ew-status { display:inline-flex; align-items:center; gap:5px; }
+    #everlife-workbench-v0 .ew-status::before { content:""; width:6px; height:6px; border-radius:50%; background:currentColor; }
+    #everlife-workbench-v0 .ew-status-progress { color:#315f50; background:#e5eee9; border-color:#c7dbd1; }
+    #everlife-workbench-v0 .ew-status-wait { color:#8b5a18; background:#f7ecd9; border-color:#ead2aa; }
+    #everlife-workbench-v0 .ew-status-input { color:#56558e; background:#ecebf7; border-color:#d7d4ee; }
+    #everlife-workbench-v0 .ew-needs-grid { display:grid; grid-template-columns:minmax(360px,.9fr) minmax(440px,1.1fr); gap:18px; align-items:start; }
+    #everlife-workbench-v0 .ew-demand-card, #everlife-workbench-v0 .ew-analysis-card { border:1px solid var(--ew-line); border-radius:14px; background:var(--ew-ivory); padding:18px; }
+    #everlife-workbench-v0 .ew-demand-card h2, #everlife-workbench-v0 .ew-analysis-card h2 { margin:4px 0 6px; font-size:20px; letter-spacing:-.025em; }
+    #everlife-workbench-v0 .ew-demand-card p, #everlife-workbench-v0 .ew-analysis-card > p { margin:0 0 16px; color:var(--ew-muted); }
+    #everlife-workbench-v0 .ew-textarea { width:100%; min-height:150px; resize:vertical; padding:13px; border:1px solid var(--ew-line); border-radius:10px; background:#faf9f5; color:var(--ew-ink); font:inherit; line-height:1.65; outline:none; }
+    #everlife-workbench-v0 .ew-textarea:focus { border-color:#7b968a; box-shadow:0 0 0 3px var(--ew-green-soft); }
+    #everlife-workbench-v0 .ew-analysis-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+    #everlife-workbench-v0 .ew-analysis-item { min-height:86px; padding:11px; border:1px solid var(--ew-line-soft); border-radius:10px; background:#faf9f5; }
+    #everlife-workbench-v0 .ew-analysis-label { color:var(--ew-faint); font-size:9px; font-weight:700; letter-spacing:.04em; }
+    #everlife-workbench-v0 .ew-analysis-value { margin-top:6px; font-size:11px; line-height:1.55; }
+    #everlife-workbench-v0 .ew-analysis-notice { margin-top:12px; padding:10px 12px; border-radius:9px; background:var(--ew-warning-soft); color:#79521d; font-size:10px; }
+    #everlife-workbench-v0 .ew-sidebar-guide { margin:auto 12px 14px; padding:12px; border-radius:10px; background:var(--ew-green-soft); color:#476559; font-size:10px; line-height:1.6; }
+    #everlife-workbench-v0 .ew-state-page { padding: 22px; overflow: auto; }
+    #everlife-workbench-v0 .ew-state-grid { display:grid; grid-template-columns:minmax(0,1.15fr) minmax(360px,.85fr); gap:18px; align-items:start; }
+    #everlife-workbench-v0 .ew-state-panel { background:var(--ew-ivory); border:1px solid var(--ew-line); border-radius:14px; padding:18px; }
+    #everlife-workbench-v0 .ew-state-panel h3 { margin:0 0 4px; font-size:17px; letter-spacing:-.025em; }
+    #everlife-workbench-v0 .ew-state-panel > p { margin:0 0 16px; color:var(--ew-muted); }
+    #everlife-workbench-v0 .ew-dimension { padding:14px 0; border-top:1px solid var(--ew-line-soft); }
+    #everlife-workbench-v0 .ew-dimension:first-of-type { border-top:0; }
+    #everlife-workbench-v0 .ew-dimension-head { display:flex; justify-content:space-between; gap:16px; margin-bottom:8px; }
+    #everlife-workbench-v0 .ew-dimension-title { font-weight:650; }
+    #everlife-workbench-v0 .ew-dimension-note { color:var(--ew-faint); font-size:10px; }
+    #everlife-workbench-v0 .ew-state-options { display:flex; gap:6px; flex-wrap:wrap; }
+    #everlife-workbench-v0 .ew-state-option { min-height:30px; padding:0 10px; border:1px solid var(--ew-line); border-radius:999px; background:#f8f7f2; color:var(--ew-muted); cursor:pointer; }
+    #everlife-workbench-v0 .ew-state-option.is-active { color:#fff; background:var(--ew-green); border-color:var(--ew-green); box-shadow:0 0 0 3px var(--ew-green-soft); }
+    #everlife-workbench-v0 .ew-priority-list { display:grid; gap:7px; margin-top:14px; }
+    #everlife-workbench-v0 .ew-priority-item { display:grid; grid-template-columns:28px minmax(0,1fr) auto; gap:10px; align-items:center; padding:10px 11px; border:1px solid var(--ew-line-soft); border-radius:10px; background:#faf9f5; }
+    #everlife-workbench-v0 .ew-priority-item.is-winner { border-color:#93aa9f; background:var(--ew-green-soft); }
+    #everlife-workbench-v0 .ew-priority-rank { width:24px; height:24px; display:grid; place-items:center; border-radius:8px; background:#eeece5; color:var(--ew-faint); font-size:10px; font-weight:700; }
+    #everlife-workbench-v0 .ew-priority-item.is-winner .ew-priority-rank { background:var(--ew-green); color:#fff; }
+    #everlife-workbench-v0 .ew-priority-label strong { display:block; font-size:11px; }
+    #everlife-workbench-v0 .ew-priority-label span { color:var(--ew-faint); font-size:9px; }
+    #everlife-workbench-v0 .ew-home-preview { background:#202622; color:#f8f7f2; border-radius:22px; padding:20px; min-height:420px; box-shadow:0 24px 60px rgba(30,36,32,.16); }
+    #everlife-workbench-v0 .ew-home-preview small { color:#aeb9b2; }
+    #everlife-workbench-v0 .ew-home-preview h3 { margin:28px 0 8px; color:#fff; font-family:Georgia,"Songti SC",serif; font-size:27px; font-weight:500; line-height:1.18; }
+    #everlife-workbench-v0 .ew-home-preview p { color:#c7d0ca; line-height:1.65; }
+    #everlife-workbench-v0 .ew-home-card { margin-top:24px; padding:16px; border-radius:15px; background:#f4f2ea; color:var(--ew-ink); }
+    #everlife-workbench-v0 .ew-home-card-label { color:var(--ew-green); font-size:10px; font-weight:700; }
+    #everlife-workbench-v0 .ew-home-card strong { display:block; margin:7px 0 4px; font-size:16px; }
+    #everlife-workbench-v0 .ew-home-card p { margin:0; color:var(--ew-muted); font-size:11px; }
+    #everlife-workbench-v0 .ew-impact-strip { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; margin-top:12px; }
+    #everlife-workbench-v0 .ew-impact-strip div { padding:10px; border-radius:10px; background:rgba(255,255,255,.07); }
+    #everlife-workbench-v0 .ew-impact-strip span { display:block; color:#9da9a1; font-size:9px; }
+    #everlife-workbench-v0 .ew-impact-strip strong { margin-top:3px; color:#fff; font-size:11px; }
     #everlife-workbench-v0 .ew-toast { position: fixed; right: 24px; bottom: 24px; z-index: 20; max-width: 320px; padding: 10px 12px; border-radius: 9px; background: var(--ew-ink); color: #fffefa; box-shadow: 0 14px 40px rgba(32,35,33,.2); opacity: 0; transform: translateY(8px); pointer-events: none; transition: opacity 180ms ease, transform 180ms ease; }
     #everlife-workbench-v0 .ew-toast.is-visible { opacity: 1; transform: translateY(0); }
     @media (max-width: 980px) {
       #everlife-workbench-v0 .ew-topbar { grid-template-columns: 190px minmax(0,1fr) auto; }
       #everlife-workbench-v0 .ew-grid { grid-template-columns: 190px minmax(500px,1fr); }
       #everlife-workbench-v0 .ew-inspector { display: none; }
-      #everlife-workbench-v0 .ew-preview-stage { grid-template-columns: minmax(0,1fr) 220px; }
+      #everlife-workbench-v0 .ew-preview-stage { grid-template-columns: minmax(0,1fr) 316px; }
       #everlife-workbench-v0 .ew-assembly-summary { grid-template-columns: repeat(2, minmax(0,1fr)); }
       #everlife-workbench-v0 .ew-top-actions .ew-button-quiet { display: none; }
     }
@@ -521,12 +634,12 @@
     <div class="ew-brand"><span class="ew-brand-mark">E</span><span>Everlife 工作台</span></div>
     <div class="ew-top-context">
       <span class="ew-project-name">Everlife｜产品设计与交付</span>
-      <span class="ew-version">v0.4</span>
-      <span class="ew-status-chip">探索中</span>
+      <span class="ew-version">v1.2</span>
+      <span class="ew-status-chip">共创中</span>
     </div>
     <div class="ew-top-actions">
       <div class="ew-mode-switch" aria-label="工作台视图">
-        <button class="is-active" type="button" data-view-mode="business">业务视图</button>
+        <button class="is-active" type="button" data-view-mode="business">业务方视图</button>
         <button type="button" data-view-mode="delivery">交付视图</button>
       </div>
       <button class="ew-button ew-button-quiet" type="button" data-action="import">导入备份</button>
@@ -540,29 +653,50 @@
     <aside class="ew-sidebar">
       <div class="ew-sidebar-section">
         <div class="ew-section-label">工作区</div>
-        <button class="ew-nav-button is-active" type="button" data-page="assembly"><span class="ew-nav-icon">⌘</span><span>组装用户旅程</span><span class="ew-nav-count" id="ew-selected-count">8</span></button>
-        <button class="ew-nav-button" type="button" data-page="library"><span class="ew-nav-icon">▦</span><span>页面与功能库</span><span class="ew-nav-count">52</span></button>
-        <button class="ew-nav-button" type="button" data-page="data"><span class="ew-nav-icon">◫</span><span>数据说明</span><span class="ew-nav-count">40</span></button>
-        <button class="ew-nav-button" type="button" data-page="versions"><span class="ew-nav-icon">◷</span><span>评审与交付</span><span class="ew-nav-count">6</span></button>
+        <button class="ew-nav-button is-active" type="button" data-page="home"><span class="ew-nav-icon">⌂</span><span>首页</span></button>
+        <button class="ew-nav-button" type="button" data-page="needs"><span class="ew-nav-icon">＋</span><span>需求台</span></button>
+        <button class="ew-nav-button" type="button" data-page="assembly"><span class="ew-nav-icon">↝</span><span>方案设计</span><span class="ew-nav-status" id="ew-design-status" title="存在待确认项"></span></button>
+        <div class="ew-solution-users" id="ew-solution-users"><div class="ew-solution-current">当前：<strong id="ew-current-user-name">在管服务用户</strong></div><div class="ew-user-groups" id="ew-recipe-list"></div></div>
+        <button class="ew-nav-button" type="button" data-page="library"><span class="ew-nav-icon">▦</span><span>产品资产</span><span class="ew-nav-count">52</span></button>
+        <button class="ew-nav-button" type="button" data-page="versions"><span class="ew-nav-icon">✓</span><span>交付中心</span><span class="ew-nav-count">6</span></button>
       </div>
-      <div class="ew-sidebar-section">
-        <div class="ew-section-label">场景方案</div>
-      </div>
-      <div class="ew-recipe-list" id="ew-recipe-list"></div>
-      <div class="ew-sidebar-note"><span class="ew-business-only">先选择一个相近场景，再调整客户来源、健康主题和服务程度。</span><span class="ew-delivery-only">稳定骨架不随单次需求改变；场景、主题、供给和服务程度通过规则配置。</span></div>
+      <div class="ew-sidebar-guide"><strong>怎么使用</strong><br>先在“需求台”录入业务需求，再进入“方案设计”调整旅程与手机原型，最后到“交付中心”检查范围。</div>
     </aside>
 
     <main class="ew-main">
-      <section class="ew-page is-active" data-page-panel="assembly">
+      <section class="ew-page is-active" data-page-panel="home">
+        <div class="ew-home-page">
+          <div class="ew-home-hero"><div><h1>Everlife App 产品工作台</h1></div><button class="ew-button ew-button-primary" type="button" data-page="needs">＋ 新建需求</button></div>
+          <div class="ew-home-layout">
+            <div style="display:grid;gap:18px">
+              <section class="ew-home-section"><div class="ew-home-section-head"><h3>当前目标</h3><span class="ew-mini-chip">12 月 31 日限定试运行</span></div><div class="ew-goal-card"><small>本期交付主线</small><strong>健康 NOW ＋ 常青客必要能力</strong><div style="margin-top:7px;color:#b8c2bc;font-size:10px">跑通健康数据／报告 → 健康问题 → 行动／服务 → 验证，并保留会员、权益包和交易承接。</div></div></section>
+              <section class="ew-home-section"><div class="ew-home-section-head"><h3>关键节点</h3><span class="ew-mini-chip">管理层 Roadmap</span></div><div class="ew-milestones"><div class="ew-milestone"><div class="ew-milestone-date">10 / 31</div><strong>建设方式拍板</strong><span>产品形态与研发模式确定</span></div><div class="ew-milestone"><div class="ew-milestone-date">11 / 30</div><strong>核心能力集成</strong><span>进入内部试用</span></div><div class="ew-milestone"><div class="ew-milestone-date">12 / 31</div><strong>限定试运行</strong><span>完成评估报告</span></div></div></section>
+              <section class="ew-home-section"><div class="ew-home-section-head"><h3>当前重点</h3><span class="ew-mini-chip">持续更新</span></div><div class="ew-focus-list"><div class="ew-focus-item"><span>1</span><div><div class="ew-item-title">确认 P0 范围与代表用户状态</div><div class="ew-item-meta">形成开发、数据与业务共同基线</div></div><span class="ew-mini-chip ew-status ew-status-progress">进行中</span></div><div class="ew-focus-item"><span>2</span><div><div class="ew-item-title">完成健康 NOW 主旅程与手机原型</div><div class="ew-item-meta">覆盖正常、等待、失败与人工承接</div></div><span class="ew-mini-chip ew-status ew-status-progress">进行中</span></div><div class="ew-focus-item"><span>3</span><div><div class="ew-item-title">明确合作交付边界与接口责任</div><div class="ew-item-meta">页面、模块、数据和验收对应到责任方</div></div><span class="ew-mini-chip ew-status ew-status-progress">进行中</span></div></div></section>
+            </div>
+            <section class="ew-home-section"><div class="ew-home-section-head"><h3>待处理</h3><button class="ew-button ew-button-quiet" type="button" data-page="versions">查看全部</button></div><div class="ew-todo-list"><div class="ew-todo-item"><span class="ew-todo-dot"></span><div><div class="ew-item-title">确认年底 P0 最终边界</div><div class="ew-item-meta">负责人 · 范围决策</div></div><span class="ew-mini-chip ew-status ew-status-wait">待确认</span></div><div class="ew-todo-item"><span class="ew-todo-dot"></span><div><div class="ew-item-title">补充 One ID 与报告接口样例</div><div class="ew-item-meta">数字底座 · 数据依赖</div></div><span class="ew-mini-chip ew-status ew-status-input">待补充</span></div><div class="ew-todo-item"><span class="ew-todo-dot"></span><div><div class="ew-item-title">评估三方开发排期</div><div class="ew-item-meta">合作方 · 技术评估</div></div><span class="ew-mini-chip ew-status ew-status-wait">待评估</span></div></div></section>
+          </div>
+        </div>
+      </section>
+
+      <section class="ew-page" data-page-panel="needs">
+        <div class="ew-main-toolbar"><span class="ew-toolbar-title">需求台</span><span class="ew-mini-chip">业务原话与产品判断分开保存</span></div>
+        <div class="ew-needs-page"><div class="ew-needs-grid">
+          <section class="ew-demand-card"><div class="ew-eyebrow">新建需求卡</div><h2>业务方希望解决什么问题？</h2><p>先记录原话，不急着画页面。系统会生成影响分析初稿，再由产品经理确认。</p><label class="ew-section-label" style="display:block;padding-left:0">业务原话</label><textarea class="ew-textarea" id="ew-demand-input" placeholder="例如：希望客户在报告出来后，可以直接看到适合自己的营养建议，需要时购买对应产品。"></textarea><div style="display:flex;justify-content:space-between;gap:8px;margin-top:12px"><span class="ew-mini-chip">状态：需求草稿</span><button class="ew-button ew-button-primary" type="button" data-action="analyze-demand">生成影响分析</button></div></section>
+          <section class="ew-analysis-card"><div class="ew-eyebrow">辅助判断 · 等待产品经理确认</div><h2>影响分析初稿</h2><p id="ew-analysis-summary">录入需求后，工作台会判断可能影响的用户、Tab、旅程、模块、数据和风险。</p><div class="ew-analysis-grid"><div class="ew-analysis-item"><div class="ew-analysis-label">影响 TAB</div><div class="ew-analysis-value" id="ew-impact-tabs">—</div></div><div class="ew-analysis-item"><div class="ew-analysis-label">用户状态</div><div class="ew-analysis-value" id="ew-impact-users">—</div></div><div class="ew-analysis-item"><div class="ew-analysis-label">可能调用</div><div class="ew-analysis-value" id="ew-impact-modules">—</div></div><div class="ew-analysis-item"><div class="ew-analysis-label">数据依赖</div><div class="ew-analysis-value" id="ew-impact-data">—</div></div><div class="ew-analysis-item"><div class="ew-analysis-label">业务承接</div><div class="ew-analysis-value" id="ew-impact-service">—</div></div><div class="ew-analysis-item"><div class="ew-analysis-label">风险与待确认</div><div class="ew-analysis-value" id="ew-impact-risk">—</div></div></div><div class="ew-analysis-notice">工作台只生成判断初稿，不会自动决定 P0，也不会把业务设想直接标记为已确认需求。</div><div style="display:flex;justify-content:flex-end;gap:8px;margin-top:12px"><button class="ew-button" type="button" data-action="save-demand">保存需求卡</button><button class="ew-button ew-button-primary" type="button" data-action="demand-to-design">确认并进入方案设计</button></div></section>
+        </div></div>
+      </section>
+
+      <section class="ew-page" data-page-panel="assembly">
         <div class="ew-main-toolbar">
-          <span class="ew-toolbar-title">用户旅程</span>
+          <span class="ew-toolbar-title">方案设计</span>
           <div class="ew-tab-switch" aria-label="App 一级 Tab">
-            <button type="button" class="ew-tab-button is-active">健康 NOW</button>
+            <button type="button" class="ew-tab-button is-active" data-app-tab="health">健康 NOW</button>
             <button type="button" class="ew-tab-button is-locked" data-locked="true">LIFE 探索馆 · 待解锁</button>
             <button type="button" class="ew-tab-button is-locked" data-locked="true">常青里 · 待解锁</button>
-            <button type="button" class="ew-tab-button">常青客</button>
+            <button type="button" class="ew-tab-button" data-app-tab="member">常青客</button>
           </div>
           <span class="ew-toolbar-spacer"></span>
+          <button class="ew-button" type="button" data-page="states">调整用户状态</button>
           <div class="ew-view-switch" aria-label="画布视图">
             <button type="button" class="ew-icon-button is-active" title="旅程与页面视图">↝</button>
             <button type="button" class="ew-icon-button" title="状态列表视图">≡</button>
@@ -573,7 +707,7 @@
           <div class="ew-canvas-inner">
             <div class="ew-journey-head">
               <div>
-                <div class="ew-eyebrow" id="ew-recipe-code">场景方案 R01</div>
+                <div class="ew-eyebrow" id="ew-recipe-code">当前用户状态</div>
                 <h2 class="ew-journey-title" id="ew-recipe-title">本地体检异常客户</h2>
                 <div class="ew-journey-desc" id="ew-recipe-desc">登录授权后由系统自动匹配；报告生成后先给结论和异常值，再让用户选择支持强度。</div>
               </div>
@@ -585,7 +719,7 @@
               <div class="ew-summary-card"><div class="ew-summary-label">公共能力</div><div class="ew-summary-value" id="ew-summary-bundles">3 组</div><div class="ew-summary-note">跨 Tab 复用，不重复开发</div></div>
               <div class="ew-summary-card"><div class="ew-summary-label">仍需确认</div><div class="ew-summary-value" id="ew-summary-open">0 项</div><div class="ew-summary-note">自动进入评审与交付记录</div></div>
             </div>
-            <div class="ew-flow" id="ew-flow" aria-label="当前旅程模块顺序"></div>
+            <div class="ew-swimlanes" id="ew-flow" aria-label="用户、系统和服务协作旅程"></div>
             <div class="ew-preview-stage">
               <div class="ew-stage-panel">
                 <div class="ew-stage-head"><span class="ew-window-dot"></span><span class="ew-window-dot"></span><span class="ew-window-dot"></span><span style="margin-left:6px">当前原型页面</span><span class="ew-stage-progress" id="ew-stage-progress">第 1 / 6 屏</span></div>
@@ -634,8 +768,30 @@
         </div>
       </section>
 
+      <section class="ew-page" data-page-panel="states">
+        <div class="ew-main-toolbar"><span class="ew-toolbar-title">用户状态与动态首页</span><span class="ew-mini-chip">四个维度独立组合</span><span class="ew-mini-chip">只给一个主任务</span></div>
+        <div class="ew-state-page">
+          <div class="ew-page-heading"><div><div class="ew-eyebrow">不是固定用户画像</div><h2>换状态，首页就跟着变</h2><p>同一位用户会随数据、服务和时间变化；这里用于验证系统此刻该显示什么。</p></div><button class="ew-button ew-button-primary" type="button" data-action="state-to-journey">带入旅程组装</button></div>
+          <div class="ew-state-grid">
+            <div class="ew-state-panel">
+              <h3>选择当前状态</h3><p>四组条件可以任意组合，不再为每类客户重复画一套 App。</p>
+              <div id="ew-state-dimensions"></div>
+              <h3 style="margin-top:14px">首页任务优先级</h3><p>上面的状态会触发候选任务，系统按以下顺序只选第一项。</p>
+              <div class="ew-priority-list" id="ew-priority-list"></div>
+            </div>
+            <div class="ew-home-preview">
+              <small>健康 NOW · 此刻首页</small>
+              <h3 id="ew-home-title">先看看这次报告里，最值得关注的一件事。</h3>
+              <p id="ew-home-copy">小 mo 已把相关结果和判断依据整理在一起，你可以从结论开始。</p>
+              <div class="ew-home-card"><div class="ew-home-card-label" id="ew-home-kicker">当前主任务</div><strong id="ew-home-action">查看新结果</strong><p id="ew-home-reason">因为你有一份新报告尚未查看。</p></div>
+              <div class="ew-impact-strip"><div><span>进入页面</span><strong id="ew-home-target">健康问题</strong></div><div><span>需要数据</span><strong id="ew-home-data">报告状态</strong></div><div><span>安全边界</span><strong id="ew-home-safety">显示依据</strong></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section class="ew-page" data-page-panel="library">
-        <div class="ew-main-toolbar"><span class="ew-toolbar-title">页面与功能库</span><span class="ew-mini-chip">50 项</span><span class="ew-mini-chip ew-business-only">标清是否可直接使用</span><span class="ew-mini-chip ew-delivery-only">L3 才可正式交付</span></div>
+        <div class="ew-main-toolbar"><span class="ew-toolbar-title">产品资产</span><span class="ew-mini-chip">页面、功能、规则与公共能力</span><span class="ew-toolbar-spacer"></span><button class="ew-button" type="button" data-page="data">查看数据字典</button></div>
         <div class="ew-library">
           <div class="ew-page-heading">
             <div><div class="ew-eyebrow ew-business-only">可复用内容</div><div class="ew-eyebrow ew-delivery-only">Registry v0.1</div><h2>需要时直接调用</h2><p class="ew-business-only">查看每个页面或功能解决什么问题，以及现在能否直接使用。</p><p class="ew-delivery-only">查看能力边界、成熟度、风险和依赖关系。</p></div>
@@ -680,24 +836,31 @@
       </section>
 
       <section class="ew-page" data-page-panel="versions">
-        <div class="ew-main-toolbar"><span class="ew-toolbar-title">评审与交付</span><span class="ew-mini-chip">保留每次调整</span></div>
+        <div class="ew-main-toolbar"><span class="ew-toolbar-title">交付中心</span><span class="ew-mini-chip">范围、待确认与版本记录</span></div>
         <div class="ew-version-page">
           <div class="ew-page-heading"><div><div class="ew-eyebrow ew-business-only">调整记录</div><div class="ew-eyebrow ew-delivery-only">Decision log</div><h2>每次业务变化都有记录</h2><p>旧方案不会被悄悄覆盖，评审结论和待确认事项可以继续追溯。</p></div><div style="display:flex;gap:8px"><button class="ew-button" type="button" data-action="backup">备份工作台</button><button class="ew-button ew-button-primary" type="button" data-action="save">保存当前版本</button></div></div>
+          <section class="ew-home-section"><div class="ew-home-section-head"><h3>本期范围依据</h3><span class="ew-mini-chip">五类资料 · 不同效力</span></div><div class="ew-source-grid">
+            <article class="ew-source-card is-primary"><div class="ew-source-type">01 · 项目节点</div><h3>Everlife Roadmap v1.16</h3><p>决定 App 在整个项目中的关键时间、管理层考核节点及跨项目依赖。</p><div class="ew-source-impact">用于：里程碑与交付节奏</div><a class="ew-source-link" href="file:///Users/apple/Desktop/EVERlife%20项目/项目管理/26-09-12%20Everlife%20Roadmap%20管理层关键路径甘特图_v1.16.html">查看本机资料 →</a></article>
+            <article class="ew-source-card is-primary"><div class="ew-source-type">02 · 产品范围</div><h3>App 一期产品设计内部版 V2.0</h3><p>P0 产品范围的当前基线；正式开发仍以待确认事项关闭后的版本为准。</p><div class="ew-source-impact">用于：页面、模块、优先级与验收</div><a class="ew-source-link" href="file:///Users/apple/Desktop/EVERlife%20项目/设计工作台/App-一期产品设计内部版.html">查看本机资料 →</a></article>
+            <article class="ew-source-card"><div class="ew-source-type">03 · 技术约束</div><h3>数据中台架构说明 9.11</h3><p>App 对接统一 ID 与服务层，不直连数据中台底层；它是架构约束，不替代字段级接口合同。</p><div class="ew-source-impact">用于：数据依赖、权限与集成边界</div><a class="ew-source-link" href="file:///Users/apple/Desktop/EVERlife%20项目/设计工作台/Everlife%20数据中台架构说明（9.11）.html">查看本机资料 →</a></article>
+            <article class="ew-source-card"><div class="ew-source-type">04 · 业务准入</div><h3>ACT 全科逆转招募标准</h3><p>三类专项服务的筛选、排除、依从性及复测指标；属于专业规则，不能直接转成通用前台文案。</p><div class="ew-source-impact">用于：服务适用性与人工复核</div><a class="ew-source-link" href="file:///Users/apple/Desktop/EVERlife%20项目/超级%20App/【健康Now】/ACT+拓诊需求沟通/全科逆转专项管理招募.xlsx">查看本机资料 →</a></article>
+            <article class="ew-source-card"><div class="ew-source-type">05 · 权益供给</div><h3>ACT 健康管理服务权益</h3><p>按“权益包”配置，不建立 ACT 会员身份；具体价格、周期与权益以后续业务确认为准。</p><div class="ew-source-impact">用于：常青客「我的权益包」与服务转化</div><a class="ew-source-link" href="file:///Users/apple/Desktop/EVERlife%20项目/超级%20App/【健康Now】/ACT+拓诊需求沟通/健康管理服务权益-20260831邝海霞.pptx">查看本机资料 →</a></article>
+          </div></section>
           <div id="ew-version-list"></div>
         </div>
       </section>
     </main>
 
     <aside class="ew-inspector">
-      <div class="ew-inspector-head"><span>调整当前场景</span><span class="ew-mini-chip ew-business-only">当前方案</span><span class="ew-mini-chip ew-delivery-only">配方级</span></div>
+      <div class="ew-inspector-head"><span>调整方案条件</span><span class="ew-mini-chip ew-business-only">改完后更新原型</span><span class="ew-mini-chip ew-delivery-only">配置级</span></div>
       <div class="ew-inspector-body">
         <div class="ew-field"><label for="ew-source">客户来源</label><select class="ew-select" id="ew-source"><option>线下检测客户</option><option>团检客户</option><option>既有医疗客户</option><option>公域新客</option><option>异地受邀客户</option></select></div>
-        <div class="ew-field"><label for="ew-theme">健康主题</label><select class="ew-select" id="ew-theme"><option value="稳糖">稳糖</option><option value="肠胃">肠胃调理</option><option value="睡眠">睡眠改善</option><option value="血管">血管健康</option></select></div>
+        <div class="ew-field"><label for="ew-theme">当前专项</label><select class="ew-select" id="ew-theme"><option value="暂无专项">暂无专项</option><option value="糖胖管理">糖胖管理</option><option value="敏感肠胃">敏感肠胃</option><option value="血管斑块">血管斑块</option><option value="其他／待确认">其他／待确认</option></select></div>
         <div class="ew-field"><label for="ew-service">服务模板</label><select class="ew-select" id="ew-service"><option value="通用">通用健康服务</option><option value="ACT">ACT 专项管理</option><option value="BPC">BPC 到院＋居家管理</option></select></div>
         <div class="ew-field"><label for="ew-stage">当前服务阶段</label><select class="ew-select" id="ew-stage"><option value="待解读">报告待解读</option><option value="到院前">准备到院</option><option value="执行中">方案执行中</option><option value="待复测">等待阶段复测</option></select></div>
         <div class="ew-field"><label>用户需要多少支持</label><div class="ew-segmented" id="ew-depth"><button type="button" data-value="免费" class="is-active">免费体验</button><button type="button" data-value="专项">专项管理</button><button type="button" data-value="深度">深度服务</button></div></div>
         <div class="ew-field"><label for="ew-data">数据状态</label><select class="ew-select" id="ew-data"><option value="完整">已有报告</option><option value="等待">报告生成中</option><option value="少量">信息较少</option><option value="无">暂无数据</option></select></div>
-        <div class="ew-field"><label for="ew-goal">本次希望用户走到哪里</label><select class="ew-select" id="ew-goal"><option value="report">看懂报告</option><option value="free-plan" selected>开启免费生活方案</option><option value="managed-service">了解并购买专项管理</option><option value="product">了解并购买营养／健康商品</option><option value="visit">预约到访服务</option><option value="membership">了解并开通会员</option></select></div>
+        <div class="ew-field"><label for="ew-goal">本次希望用户走到哪里</label><select class="ew-select" id="ew-goal"><option value="report">看懂报告</option><option value="free-plan" selected>获得并开始一项行动</option><option value="managed-service">了解并购买专项管理</option><option value="product">了解并购买营养／健康商品</option><option value="visit">预约到访服务</option><option value="membership">了解并开通会员</option></select></div>
         <div class="ew-assemble-box">
           <div class="ew-assemble-title">生成一套可点击原型</div>
           <div class="ew-assemble-copy">系统会补齐必要步骤，并保留自动判断与交付依赖。</div>
@@ -744,6 +907,11 @@
         ['HD-04','健康指标卡','健康数据','L2','体验模块','显示结果、参考范围、单位、来源和时间。','结构化指标','可核验指标卡','HD-03'],
         ['HD-05','身体地图','健康数据','L0','候选','以身体区域组织跨来源健康问题。','健康主题、问题','身体区域视图','医学映射'],
         ['HD-06','趋势、前后对比与结果证据','健康数据','L2','体验模块','用趋势和可比复测说明变化，而非只写阶段总结。','指标序列、周期','趋势、证据缺口','可比性规则'],
+        ['ISSUE-01','健康问题详情','健康理解','L2','架构核心','围绕一件值得处理的健康问题，组织状态、优先级、判断依据、行动和验证。','健康问题、判断依据','行动与验证入口','HD-02, RT-03'],
+        ['ACT-01','五类健康行动','方案与行动','L2','架构核心','统一承接行为、营养、补剂、检测和专业服务，不把业务供给做成一级入口。','健康问题、适用性','可执行行动','ISSUE-01'],
+        ['SUP-01','营养／补剂行动详情','方案与行动','L1','高风险能力','先说明为什么需要，再展示用法、风险、专业审核和验证节点。','健康问题、禁忌、审核','安全执行方案','ACT-01, PL-09'],
+        ['SUP-02','我的补剂方案','方案与行动','L1','体验模块','查看正在使用的营养素或产品，支持确认、提醒、暂停与不适反馈。','方案、商品、用户确认','当前组合与记录','SUP-01'],
+        ['TEST-01','检测与复测详情','检测与复测','L1','体验模块','说明为何检测、何时检测、可解释什么，并把结果回流健康问题。','问题、检测项目、权益','预约与回流节点','ISSUE-01, SV-04'],
         ['IN-01','渐进式信息补充','健康数据','L2','体验模块','把复杂问卷拆成短问题，支持用户自填、协助填写和稍后补充。','资料缺口、服务阶段','答案、确认状态','AI-03'],
         ['PL-01','方案准入与安全确认','方案与行动','L1','高风险能力','开始方案前完成禁忌、过敏和安全边界确认。','风险、用药、禁忌','准入或转人工','AI-04'],
         ['PL-02','7 天轻量方案','方案与行动','L1','体验模块','免费 7 天主题生活方案，降低第一次行动门槛。','主题、情境、目标','7 天行动安排','PL-01'],
@@ -767,7 +935,7 @@
         ['AI-05','AI 转人工','AI 与通知','L1','体验模块','将上下文和用户选择转给健管师。','对话摘要、授权','人工会话、等待状态','CareTeam'],
         ['NT-01','通知与召回','AI 与通知','L1','平台能力','报告完成、行动和服务节点的可控提醒。','事件、偏好','通知、深链','消息平台'],
         ['MB-01','会员身份','会员与商业','L1','体验模块','展示基础、高阶会员身份与有效期。','会员账户','身份状态','常青客'],
-        ['MB-02','权益与使用记录','会员与商业','L1','体验模块','呈现可用权益、剩余次数、使用记录和基于真实订单计算的已省金额。','权益、订单、核销','权益清单、记录、已省','交易域'],
+        ['MB-02','权益包与使用记录','会员与商业','L1','体验模块','分别呈现业务服务权益包与会员权益，并显示剩余次数、使用记录和基于真实订单计算的已省金额。','权益包、会员权益、订单、核销','权益清单、记录、已省','交易域'],
         ['CM-03','主题商品组合','会员与商业','L0','业务配置','按健康主题组合检测、服务、零售和膳食供给。','主题、供给','商品组合','商品中心'],
         ['CM-04','复购与履约','会员与商业','L1','体验模块','管理可复购商品、物流或服务履约。','订单、履约','进度与复购','订单域'],
         ['PAY-01','购买方式与适用性','支付与交易','L1','高风险能力','普通价、会员价和权益购买方式选择。','用户权益、Offer','购买方式','SV-02'],
@@ -825,17 +993,27 @@
       ].map(row => ({id:row[0],key:row[1],name:row[2],group:row[3],definition:row[4],source:row[5],permission:row[6],usage:row[7],status:row[8],fields:row[9].split(';').map(field=>{const parts=field.split('|');return{key:parts[0],name:parts[1],type:parts[2],required:parts[3]};})}));
 
       const recipes = [
-        {id:'R01',title:'本地体检异常客户',meta:'数据驱动型 · 健康 NOW',desc:'登录授权后由系统自动匹配；报告生成后先给结论和异常值，再让用户选择支持强度。',modules:['ID-01','ID-03','ID-04','HOME-01','HD-01','HD-02','HD-04','SV-01'],source:'线下检测客户',theme:'稳糖',service:'通用',stage:'待解读',data:'完整',depth:'免费',goal:'free-plan'},
-        {id:'R02',title:'异地高价值客户',meta:'服务窗口型 · NOW / 常青客',desc:'以停留时间和服务节点为中心，行前补资料，到访期间突出最近安排，离开前确认长期关系。',modules:['ID-01','ID-03','AI-03','HOME-01','SV-04','SV-05','SV-06','RT-04'],source:'异地受邀客户',theme:'血管',service:'通用',stage:'到院前',data:'少量',depth:'深度',goal:'visit'},
-        {id:'R03',title:'探索馆／公域新客',meta:'兴趣培育型 · 轻进入',desc:'从游客或轻登录开始，先选择主题和轻体验，再逐步补充健康证据，不直接展示医疗化风险。',modules:['ID-01','RT-01','RT-02','HOME-01','AI-03','IN-01','PL-02','AI-01','RT-04'],source:'公域新客',theme:'肠胃',service:'通用',stage:'待解读',data:'无',depth:'免费',goal:'free-plan'},
-        {id:'R04',title:'团检客户 · 肠胃调理',meta:'团检承接型 · 报告到转化',desc:'从团检身份与报告进入，先看结论与肠胃相关证据，再提供免费生活方式建议；营养素配制须完成适用性与安全校验后进入交易。',modules:['ID-01','RT-01','ID-02','ID-03','ID-04','HOME-01','HD-01','HD-02','HD-04','RT-04','RT-03','AI-03','IN-01','SV-01','PL-01','PL-02','SV-02','CM-03','PAY-01','PAY-02','PAY-03','PAY-04','PAY-05','PAY-06','NT-01'],source:'团检客户',theme:'肠胃',service:'通用',stage:'待解读',data:'完整',depth:'专项',goal:'product'},
-        {id:'R05',title:'ACT 专项健康管理',meta:'指标任务型 · 健康 NOW / 常青客',desc:'从报告与指标进入，经专业审核后执行专项任务，结合随访或设备数据观察变化，并在结案时形成评估。',modules:['ID-01','ID-03','ID-02','ID-04','HOME-01','HD-02','HD-04','HD-03','HD-06','IN-01','PL-09','PL-07','PL-03','PL-05','SV-05','SV-06','AI-01','AI-05','NT-01','PL-08','MB-01','MB-02'],source:'既有医疗客户',theme:'稳糖',service:'ACT',stage:'执行中',data:'完整',depth:'专项',goal:'managed-service'},
-        {id:'R06',title:'BPC 到院＋居家管理',meta:'高触达服务型 · 健康 NOW / 常青客',desc:'到院前先看安排和准备事项，完成检测与解读后进入经审核方案；到院服务和居家行动共同推进，阶段复测后给出下一步。',modules:['ID-01','ID-03','ID-02','ID-04','HOME-01','SV-04','IN-01','HD-02','HD-03','PL-09','PL-07','PL-03','PL-05','SV-05','SV-06','AI-01','AI-05','NT-01','HD-06','PL-08','MB-01','MB-02'],source:'异地受邀客户',theme:'血管',service:'BPC',stage:'到院前',data:'少量',depth:'深度',goal:'visit'}
+        {id:'J04',priority:'core',title:'在管服务用户',meta:'核心用户 · 已付费 · 履约中',desc:'正在接受专项或长期健康管理，首页优先展示当前阶段、今日任务、专业团队和下一验证节点。',modules:['ID-01','ID-03','ID-02','ID-04','HOME-01','HD-02','ISSUE-01','PL-09','PL-07','PL-03','PL-05','SV-05','SV-06','AI-01','AI-05','NT-01','HD-06','PL-08','MB-02'],source:'既有医疗客户',theme:'糖胖管理',service:'ACT',stage:'执行中',data:'完整',depth:'专项',goal:'managed-service'},
+        {id:'J07',priority:'core',title:'会员／多服务用户',meta:'核心用户 · 已付费 · 多关系',desc:'统一查看 Everlife 会员身份、业务权益包、多个服务项目、订单、团队和售后，不与健康结果重复建设。',modules:['ID-01','ID-03','HOME-01','MB-01','MB-02','SV-05','SV-06','CM-04','PAY-07','AI-01'],source:'既有医疗客户',theme:'暂无专项',service:'通用',stage:'执行中',data:'完整',depth:'深度',goal:'membership'},
+        {id:'J01',priority:'core',title:'线下检测用户',meta:'核心用户 · 已消费 · 待承接',desc:'完成检测后等待报告；报告生成时先看结论、异常值与原始报告，再进入行动、复查或服务。',modules:['ID-01','ID-03','ID-04','HOME-01','HD-01','HD-02','HD-04','HD-03','ISSUE-01','ACT-01','SV-01','NT-01'],source:'线下检测客户',theme:'糖胖管理',service:'通用',stage:'待解读',data:'等待',depth:'免费',goal:'report'},
+        {id:'J03',priority:'focus',title:'企业／团检用户',meta:'重点用户 · 组织付费',desc:'区分个人健康资料与组织提供的服务或权益；个人报告只按授权展示，组织关系不扩大健康数据权限。',modules:['ID-01','RT-01','ID-02','ID-03','ID-04','HOME-01','HD-01','HD-02','HD-04','ISSUE-01','MB-02','SV-01','NT-01'],source:'团检客户',theme:'敏感肠胃',service:'通用',stage:'待解读',data:'完整',depth:'专项',goal:'report'},
+        {id:'J02',priority:'focus',title:'既有健康档案用户',meta:'重点用户 · 已有关系',desc:'已有历史报告或就诊档案但暂无进行中服务，首页根据新结果、复查到期或健康重点给出唯一下一步。',modules:['ID-01','ID-03','ID-04','HOME-01','HD-02','HD-04','HD-06','ISSUE-01','AI-01','RT-04'],source:'既有医疗客户',theme:'血管斑块',service:'通用',stage:'待复测',data:'完整',depth:'免费',goal:'report'},
+        {id:'J06',priority:'compatible',title:'已登录无数据用户',meta:'兼容用户 · 待建档',desc:'已有账户但暂时没有可用健康数据，通过上传、关联设备或短问答渐进补充，不强迫一次填完。',modules:['ID-01','ID-03','HOME-01','AI-03','IN-01','AI-01','RT-04'],source:'公域新客',theme:'暂无专项',service:'通用',stage:'待解读',data:'无',depth:'免费',goal:'free-plan'},
+        {id:'J05',priority:'compatible',title:'公域游客',meta:'兼容用户 · 低门槛体验',desc:'无需先注册即可有限咨询或上传报告；需要保存、持续追踪和深度服务时再完成登录与授权。',modules:['ID-01','RT-01','HOME-01','AI-03','AI-01','IN-01'],source:'公域新客',theme:'暂无专项',service:'通用',stage:'待解读',data:'无',depth:'免费',goal:'free-plan'},
+        {id:'JX',priority:'exception',title:'异常状态用户',meta:'全旅程必备 · 异常恢复',desc:'横跨所有代表用户，覆盖身份、报告、权益、设备、方案、支付和服务异常，并帮助用户回到原任务。',modules:['ID-01','ID-02','ID-03','ID-04','HOME-01','AI-04','AI-05','PAY-06','PAY-07','NT-01'],source:'线下检测客户',theme:'暂无专项',service:'通用',stage:'待解读',data:'少量',depth:'免费',goal:'report'}
       ];
 
-      const releaseVersion = {date:'2026-09-04 15:30',name:'工作台 V0.5 ACT／BPC 共性装配',change:'新增服务模板和服务阶段配置、渐进式信息补充、方案审核发布，并加入 ACT 与 BPC 两条共用模块参考旅程。',status:'已记录'};
+      const releaseVersion = {date:'2026-09-16 23:00',name:'工作台 V1.2 默认折叠代表用户',change:'代表用户分组在每次打开工作台时默认折叠，由使用者按需展开，减少左侧导航占用。',status:'共创中'};
       const versions = [
         releaseVersion,
+        {date:'2026-09-16 22:30',name:'工作台 V1.1 左侧代表用户导航',change:'代表用户移入方案设计左侧折叠菜单；四组以克制色彩区分，主画布直接进入当前用户旅程。',status:'已记录'},
+        {date:'2026-09-16 22:00',name:'工作台 V1.0 代表用户与优先级',change:'方案设计按核心验证、重点覆盖、兼容考虑和横向异常组织八类代表用户，并与专项配置、三条泳道及手机原型连接。',status:'已记录'},
+        {date:'2026-09-16 21:00',name:'工作台 V0.9 方案设计重构',change:'方案设计改为用户、系统、服务三条泳道；健康 NOW 与常青客可切换，并统一由用户状态驱动手机原型。',status:'已记录'},
+        {date:'2026-09-16 20:00',name:'工作台 V0.8 范围依据与里程碑',change:'接入 Roadmap、P0 基线、数据架构、ACT 准入与权益资料；按效力分层，并明确 ACT 产品套餐为权益包而非会员。',status:'已记录'},
+        {date:'2026-09-16 18:00',name:'工作台 V0.7 协作流程重构',change:'首页收紧为目标、重点、待处理和新建需求；新增需求卡与辅助影响分析，按“需求—方案—资产—交付”组织工作。',status:'已记录'},
+        {date:'2026-09-16 16:00',name:'工作台 V0.6 状态编排升级',change:'恢复完整模块装配能力；新增四维用户状态、动态首页优先级、健康问题中心及五类行动骨架。',status:'已记录'},
+        {date:'2026-09-11 18:00',name:'一期设计与实施基线 V2.0',change:'健康 NOW 收口为“数据／报告—健康问题—判断依据—行动—验证”；营养补剂与检测复测进入子目录。',status:'内部评审'},
+        {date:'2026-09-04 15:30',name:'工作台 V0.5 ACT／BPC 共性装配',change:'新增服务模板和服务阶段配置、渐进式信息补充、方案审核发布，并加入 ACT 与 BPC 两条共用模块参考旅程。',status:'已记录'},
         {date:'2026-08-28 16:26',name:'工作台 V0.4 模块装配台',change:'增加业务条件自动装配、公共能力说明和整条旅程可点击原型；系统判断不再伪装成用户页面。',status:'探索中'},
         {date:'2026-08-26 18:20',name:'工作台 V0.3 业务化调整',change:'默认改为业务视图，增加交付视图和 37 类数据说明；抽象编码与开发字段按需展开。',status:'探索中'},
         {date:'2026-08-25 16:40',name:'工作台 V0.1 建立',change:'模块注册表、三条旅程配方、装配画布、业务配置和体验检查进入同一工作台。',status:'探索中'},
@@ -843,11 +1021,11 @@
         {date:'2026-08-25 13:30',name:'三条参考旅程 V0.4',change:'验证本地体检、异地高价值、公域新客共用同一内核，通过配方改变首页与下一步。',status:'待确认'}
       ];
 
-      const STORAGE_KEY = 'everlife-design-workbench-v0.5';
-      const LEGACY_STORAGE_KEY = 'everlife-design-workbench-v0.4';
-      const state = {page:'assembly',viewMode:'business',recipe:'R01',selected:'HD-02',depth:'免费',goal:'free-plan',filter:'全部',query:'',added:[],dataFilter:'全部',dataQuery:'',dataSelected:'BO-01',dataTech:false};
+      const STORAGE_KEY = 'everlife-design-workbench-v1.2';
+      const LEGACY_STORAGE_KEY = 'everlife-design-workbench-v1.1';
+      const state = {page:'home',viewMode:'business',appTab:'health',openGroup:'',recipe:'J04',selected:'HOME-01',depth:'专项',goal:'managed-service',filter:'全部',query:'',added:[],dataFilter:'全部',dataQuery:'',dataSelected:'BO-01',dataTech:false,userState:{data:'usable',stage:'action',event:'service',identity:'managed'} };
       const byId = id => modules.find(m => m.id === id);
-      const currentRecipe = () => recipes.find(r => r.id === state.recipe);
+      const currentRecipe = () => recipes.find(r => r.id === state.recipe) || recipes[0];
       const activeModuleIds = () => [...currentRecipe().modules, ...state.added.filter(id => !currentRecipe().modules.includes(id))];
       const isPrototypeScreen = module => module && !['平台能力','架构核心'].includes(module.kind);
       const prototypeModuleIds = () => activeModuleIds().filter(id => isPrototypeScreen(byId(id)));
@@ -859,7 +1037,7 @@
         {id:'service',name:'项目与进度',modules:['SV-04','SV-05','SV-06','CM-04']},
         {id:'program',name:'方案与审核',modules:['IN-01','PL-03','PL-07','PL-08','PL-09']}
       ];
-      const goalNames = {report:'看懂报告','free-plan':'开启免费生活方案','managed-service':'购买专项管理','product':'购买营养／健康商品',visit:'预约到访服务',membership:'开通会员'};
+      const goalNames = {report:'看懂报告','free-plan':'开始一项行动','managed-service':'购买专项管理','product':'购买营养／健康商品',visit:'预约到访服务',membership:'开通会员'};
       const readiness = level => level==='L3' ? '可以交付' : level==='L2' ? '可以预览' : level==='L1' ? '需要补充' : '待业务确认';
       const businessNames = {
         'ID-01':'登录 Everlife','ID-03':'同意使用哪些健康信息','ID-04':'正在整理健康信息','HOME-01':'首页重点任务','RT-01':'识别客户来自哪里','RT-02':'识别当前健康主题','RT-03':'判断风险与适合的服务','RT-04':'决定此刻最该做什么','RT-05':'匹配主题与服务','HD-01':'查看报告进度','HD-02':'先看报告结论','HD-04':'查看异常指标','IN-01':'一次补充少量信息','PL-09':'等待专业确认方案','SV-01':'选择需要的支持','SV-02':'确认服务是否适合','AI-02':'告诉用户回答依据','AI-04':'需要就医或人工时及时分流','CM-03':'主题商品与服务组合','PAY-05':'确认支付结果'
@@ -869,7 +1047,7 @@
 
       function captureWorkspace() {
         return {
-          workbench_version:'0.5',
+          workbench_version:'1.2',
           saved_at:new Date().toISOString(),
           state:{...state,added:[...state.added]},
           recipes:recipes.map(r=>({...r,modules:[...r.modules]})),
@@ -930,24 +1108,31 @@
 
       function renderRecipes() {
         const host = root.querySelector('#ew-recipe-list');
-        host.innerHTML = recipes.map(r => `<button class="ew-recipe-button ${r.id===state.recipe?'is-active':''}" type="button" data-recipe="${r.id}"><span class="ew-recipe-dot"></span><span><span class="ew-recipe-title">${r.title}</span><span class="ew-recipe-meta">${state.viewMode==='business'?`${r.source} · ${r.theme}`:r.meta}</span></span></button>`).join('');
+        if (!host) return;
+        const groups=[['core','核心验证'],['focus','重点覆盖'],['compatible','兼容考虑'],['exception','横向异常']];
+        host.innerHTML=groups.map(([key,label])=>{const items=recipes.filter(r=>r.priority===key);return `<div class="ew-user-group ${state.openGroup===key?'is-open':''}" data-priority="${key}"><button class="ew-user-group-label" type="button" data-user-group="${key}">${label}<span class="ew-user-group-count">${items.length}</span></button><div class="ew-user-group-list">${items.map(r=>`<button class="ew-recipe-button ${r.id===state.recipe?'is-active':''}" type="button" data-recipe="${r.id}"><span class="ew-recipe-dot"></span><span><span class="ew-recipe-title">${r.title}</span><span class="ew-recipe-meta">${state.viewMode==='business'?r.meta:`${r.id} · ${r.meta}`}</span></span></button>`).join('')}</div></div>`;}).join('');
       }
 
       function renderFlow() {
         const recipe = currentRecipe();
-        root.querySelector('#ew-recipe-code').textContent = state.viewMode==='business' ? '当前场景方案' : `业务配方 ${recipe.id}`;
+        root.querySelector('#ew-recipe-code').textContent = state.viewMode==='business' ? `当前用户 · ${recipe.source} · ${recipe.stage}` : `方案配置 ${recipe.id}`;
         root.querySelector('#ew-recipe-title').textContent = recipe.title;
         root.querySelector('#ew-recipe-desc').textContent = recipe.desc;
+        root.querySelector('#ew-current-user-name').textContent = recipe.title;
         const ids = activeModuleIds();
-        root.querySelector('#ew-selected-count').textContent = ids.length;
-        root.querySelector('#ew-recipe-status').textContent = `${ids.length} 个步骤 · ${ids.includes('RT-04') || ['R01','R05','R06'].includes(recipe.id) ? '旅程完整' : '需要检查'}`;
+        root.querySelector('#ew-design-status').title = `${ids.length} 个步骤，存在待确认项`;
+        root.querySelector('#ew-recipe-status').textContent = `${ids.length} 个步骤 · ${recipe.priority==='exception'?'异常恢复':recipe.meta.split(' · ')[0]}`;
         if (!ids.includes(state.selected)) state.selected=prototypeModuleIds()[0] || ids[0] || 'ID-01';
         const flow = root.querySelector('#ew-flow');
-        flow.innerHTML = ids.map((id,index) => {
+        const serviceIds=['PL-09','SV-02','SV-05','SV-06','AI-05','AI-04'];
+        const laneOf=m=>serviceIds.includes(m.id)?'service':(!isPrototypeScreen(m)||m.kind.includes('平台')||m.kind.includes('架构'))?'system':'user';
+        const nodeHtml=(id,index,list) => {
           const m = byId(id);
           if (!m) return '';
-          return `<div class="ew-flow-node-wrap"><button class="ew-flow-node ${state.selected===id?'is-selected':''}" type="button" data-module="${id}"><div class="ew-flow-id ew-delivery-only">${id}</div><div class="ew-flow-name">${displayName(m)}</div><div class="ew-flow-state">${state.viewMode==='business'?readiness(m.maturity):`${m.maturity} · ${m.kind}`}</div></button>${index < ids.length-1 ? '<span class="ew-flow-arrow"></span>' : ''}</div>`;
-        }).join('');
+          return `<div class="ew-flow-node-wrap"><button class="ew-flow-node ${state.selected===id?'is-selected':''}" type="button" data-module="${id}"><div class="ew-flow-id ew-delivery-only">${id}</div><div class="ew-flow-name">${displayName(m)}</div><div class="ew-flow-state">${state.viewMode==='business'?readiness(m.maturity):`${m.maturity} · ${m.kind}`}</div></button>${index < list.length-1 ? '<span class="ew-flow-arrow"></span>' : ''}</div>`;
+        };
+        const lanes=[['user','用户操作','用户可以看到和点击'],['system','系统处理','自动匹配、判断与路由'],['service','服务承接','专业审核、人工联系与履约']];
+        flow.innerHTML=lanes.map(([key,label,empty])=>{const list=ids.filter(id=>laneOf(byId(id))===key);return `<div class="ew-swimlane" data-lane="${key}"><div class="ew-swimlane-label">${label}</div><div class="ew-swimlane-track">${list.length?list.map((id,index)=>nodeHtml(id,index,list)).join(''):`<span class="ew-swimlane-empty">${empty}</span>`}</div></div>`;}).join('');
         renderAssemblySummary();
         renderDetail();
         renderQa();
@@ -1018,6 +1203,20 @@
         renderFlow();
       }
 
+      function switchAppTab(tab) {
+        state.appTab=tab;
+        root.querySelectorAll('[data-app-tab]').forEach(button=>button.classList.toggle('is-active',button.dataset.appTab===tab));
+        if (tab==='member') {
+          ['MB-01','MB-02','SV-05','SV-06'].forEach(id=>{if(!activeModuleIds().includes(id) && !state.added.includes(id)) state.added.push(id);});
+          state.selected='MB-01';
+          toast('已切换到常青客必要能力');
+        } else {
+          state.selected=activeModuleIds().find(id=>!['MB-01','MB-02'].includes(id) && isPrototypeScreen(byId(id))) || 'HOME-01';
+          toast('已切换到健康 NOW 主旅程');
+        }
+        renderFlow(); persistWorkspace();
+      }
+
       function renderPhone(m) {
         const theme = root.querySelector('#ew-theme').value;
         const data = root.querySelector('#ew-data').value;
@@ -1042,9 +1241,9 @@
         nav.textContent = m.domain === '支付与交易' ? 'Everlife' : m.domain === '会员与商业' && m.id !== 'CM-03' ? '常青客' : '健康 NOW';
         kicker.textContent = displayName(m);
         tabs.innerHTML=nav.textContent==='常青客'?'<span>健康 NOW</span><span>LIFE 探索馆</span><span>常青里</span><strong>常青客</strong>':'<strong>健康 NOW</strong><span>LIFE 探索馆</span><span>常青里</span><span>常青客</span>';
-        const reportView = theme==='肠胃' ? [data==='无'?'还需要一点信息':'先看看肠胃相关结论',data==='无'?'上传报告或回答几个问题，可以让解读更贴近你。':'我们把报告里与肠胃有关的信息放在一起，再结合你的真实感受。','<div class="ew-phone-row"><span>团检报告相关结果</span><strong style="color:#315f50">已整理</strong></div><div class="ew-phone-row"><span>还需要了解</span><strong style="color:#9a5f16">症状与饮食反应</strong></div>','继续看解读'] : [data==='无'?'还需要一点信息':`这次需要先关注${theme}。`,data==='无'?'上传报告、关联设备或回答几个问题，都可以让解读更贴近你。':'先看结论和异常值，再决定下一步。','<div class="ew-phone-row"><span>空腹血糖</span><strong>6.38 ↑</strong></div><div class="ew-phone-row"><span>糖化血红蛋白</span><strong>6.1% ↑</strong></div>','看看怎么做'];
-        const indicatorView = theme==='肠胃' ? ['报告信息已整理','报告事实和你的身体感受需要分开记录，再一起判断下一步。','<div class="ew-phone-row"><span>报告来源</span><strong style="color:#202321">团检报告</strong></div><div class="ew-phone-row"><span>生活信息</span><strong style="color:#9a5f16">待补充</strong></div>','查看原报告'] : ['结果高于参考范围','每个数值都保留单位、来源和参考范围，方便核对。','<div class="ew-phone-row"><span>本次结果</span><strong>6.38 mmol/L</strong></div><div class="ew-phone-row"><span>参考范围</span><strong style="color:#737870">3.9–6.1</strong></div>','查看原报告'];
-        const dailyAction = theme==='肠胃' ? '记录一餐后的肠胃反应' : theme==='睡眠' ? '固定今晚的睡前准备时间' : theme==='血管' ? '完成 10 分钟轻活动' : '饭后走 10 分钟';
+        const reportView = theme==='敏感肠胃' ? [data==='无'?'还需要一点信息':'先看看敏感肠胃相关结论',data==='无'?'上传报告或回答几个问题，可以让解读更贴近你。':'我们把报告里与敏感肠胃有关的信息放在一起，再结合你的真实感受。','<div class="ew-phone-row"><span>团检报告相关结果</span><strong style="color:#315f50">已整理</strong></div><div class="ew-phone-row"><span>还需要了解</span><strong style="color:#9a5f16">症状与饮食反应</strong></div>','继续看解读'] : [data==='无'?'还需要一点信息':theme==='暂无专项'?'先看看目前有哪些健康信息。':`这次需要先关注${theme}。`,data==='无'?'上传报告、关联设备或回答几个问题，都可以让解读更贴近你。':'先看结论和异常值，再决定下一步。','<div class="ew-phone-row"><span>空腹血糖</span><strong>6.38 ↑</strong></div><div class="ew-phone-row"><span>糖化血红蛋白</span><strong>6.1% ↑</strong></div>','看看怎么做'];
+        const indicatorView = theme==='敏感肠胃' ? ['报告信息已整理','报告事实和你的身体感受需要分开记录，再一起判断下一步。','<div class="ew-phone-row"><span>报告来源</span><strong style="color:#202321">团检报告</strong></div><div class="ew-phone-row"><span>生活信息</span><strong style="color:#9a5f16">待补充</strong></div>','查看原报告'] : ['结果高于参考范围','每个数值都保留单位、来源和参考范围，方便核对。','<div class="ew-phone-row"><span>本次结果</span><strong>6.38 mmol/L</strong></div><div class="ew-phone-row"><span>参考范围</span><strong style="color:#737870">3.9–6.1</strong></div>','查看原报告'];
+        const dailyAction = theme==='敏感肠胃' ? '记录一餐后的肠胃反应' : theme==='血管斑块' ? '完成 10 分钟轻活动' : '饭后走 10 分钟';
         const views = {
           'ID-01':['欢迎进入 Everlife','登录后，我们会整理你已授权的健康记录。','<div class="ew-phone-row"><span>微信登录</span><strong style="color:#315f50">继续</strong></div><div class="ew-phone-row"><span>手机号验证码</span><strong style="color:#202321">登录</strong></div>','登录 Everlife'],
           'ID-03':['让健康信息为你所用','授权后，小 mo 才能结合你的资料回答和行动。','<div class="ew-phone-row"><span>报告与档案</span><strong style="color:#315f50">已选择</strong></div><div class="ew-phone-row"><span>AI 解读</span><strong style="color:#315f50">已选择</strong></div>','同意并继续'],
@@ -1077,7 +1276,7 @@
           'PL-08':['这 7 天，你已经有了变化','先看做到的和可坚持的；需要复测才能确认的，不提前下结论。','<div class="ew-phone-row"><span>完成行动</span><strong style="color:#315f50">5 / 7 天</strong></div><div class="ew-phone-row"><span>下一步</span><strong style="color:#202321">继续免费陪伴或选择服务</strong></div>','查看下一步'],
           'PL-09':['方案正在确认','AI 可以协助整理，但只有专业人员确认后，方案才会正式发布给你。','<div class="ew-phone-row"><span>当前状态</span><strong style="color:#9a5f16">专业审核中</strong></div><div class="ew-phone-row"><span>发布后</span><strong style="color:#315f50">小 mo 会提醒你</strong></div>','查看审核进度'],
           'MB-01':['你的 Everlife 会员','统一会员身份承接探索馆特惠、指定服务权益和健康零售会员价。','<div class="ew-phone-row"><span>当前身份</span><strong style="color:#202321">非会员</strong></div><div class="ew-phone-row"><span>基础会员</span><strong style="color:#315f50">查看权益</strong></div>','了解基础会员'],
-          'MB-02':['我的权益与使用记录','可用权益、剩余次数和每次使用记录都放在一起；具体内容按业务配置。','<div class="ew-phone-row"><span>当前可用</span><strong style="color:#315f50">按会员配置</strong></div><div class="ew-phone-row"><span>使用记录</span><strong style="color:#202321">查看明细</strong></div>','查看权益详情'],
+          'MB-02':['我的权益包','服务权益包与 Everlife 会员权益分开显示，避免把购买某项服务误认为成为会员。','<div class="ew-phone-row"><span>专项管理权益包</span><strong style="color:#315f50">使用中</strong></div><div class="ew-phone-row"><span>Everlife 会员权益</span><strong style="color:#737870">未开通</strong></div>','查看权益包'],
           'CM-04':['订单正在履约','商品、物流和服务进度统一进入常青客查看。','<div class="ew-phone-row"><span>当前状态</span><strong style="color:#315f50">等待配制</strong></div><div class="ew-phone-row"><span>售后</span><strong style="color:#202321">订单与售后</strong></div>','查看订单进度'],
           'PAY-09':['全部交易都在这里','订单、支付、退款和发票按时间统一查看。','<div class="ew-phone-row"><span>最近订单</span><strong style="color:#202321">基础会员</strong></div><div class="ew-phone-row"><span>订单状态</span><strong style="color:#315f50">已完成</strong></div>','查看订单详情'],
           'RT-04':['现在，先做这一件事','我们根据资料、服务状态和真实供给，给出当前唯一下一步。','<div class="ew-phone-row"><span>当前任务</span><strong style="color:#315f50">打开新报告</strong></div><div class="ew-phone-row"><span>为什么</span><strong style="color:#737870">报告已完成</strong></div>','继续']
@@ -1150,6 +1349,39 @@
         toggle.textContent=tech.classList.contains('is-hidden')?'查看开发定义':'收起开发定义';
       }
 
+      const stateDimensions = [
+        {key:'data',title:'数据情况',note:'现在有多少信息可用',options:[['none','没有数据'],['parsing','等待整理'],['usable','已有数据'],['stale','需要更新']]},
+        {key:'stage',title:'健康阶段',note:'用户现在处于哪一步',options:[['none','暂时正常'],['new-result','结果待看'],['issue','发现问题'],['action','正在行动'],['validation','等待复测'],['closed','已经结束']]},
+        {key:'event',title:'近期事项',note:'最近有没有必须先做的事',options:[['none','暂无安排'],['appointment','即将预约'],['today','今天到院'],['service','服务进行中'],['report-wait','等待报告'],['retest','到了复测'],['human','人工处理中']]},
+        {key:'identity',title:'身份权益',note:'用户是谁、拥有什么',options:[['visitor','游客体验'],['self-pay','个人客户'],['member','常青客会员'],['group','团检客户'],['managed','在管客户']]}
+      ];
+      const priorityRules = [
+        {id:'safety',label:'安全或人工处理',hint:'需人工复核、风险提示',match:s=>s.event==='human',action:'联系服务团队',title:'这件事需要专业人员和你一起处理。',copy:'小 mo 已整理好相关信息，服务团队会在授权范围内继续跟进。',target:'人工服务',data:'分流理由',safety:'人工承接'},
+        {id:'today',label:'今天的时间事件',hint:'到院、预约、服务正在发生',match:s=>['today','appointment','service'].includes(s.event),action:'查看今天的安排',title:'今天的安排，先从这一步开始。',copy:'时间、地点和准备事项已经整理好，按当前节点完成即可。',target:'服务日程',data:'预约／服务状态',safety:'允许变更'},
+        {id:'result',label:'新结果',hint:'报告已经生成但用户尚未查看',match:s=>s.stage==='new-result',action:'查看新结果',title:'先看看这次报告里，最值得关注的一件事。',copy:'小 mo 已把相关结果和判断依据整理在一起，你可以从结论开始。',target:'健康问题',data:'报告与异常值',safety:'显示依据'},
+        {id:'retest',label:'复查或复测',hint:'到了验证前后变化的时间',match:s=>s.event==='retest'||s.stage==='validation',action:'安排复测',title:'到了看看变化的时候。',copy:'这次复测会和上一次结果、已执行行动放在一起比较。',target:'复测详情',data:'上次结果与窗口',safety:'专业建议'},
+        {id:'action',label:'今天的行动',hint:'用户正在执行计划或服务',match:s=>s.stage==='action',action:'完成今天的一件事',title:'今天不用做很多，先完成这一件。',copy:'这项行动来自你当前的健康问题和服务阶段，完成后可轻量反馈。',target:'今日行动',data:'方案与生活情境',safety:'可替代动作'},
+        {id:'complete',label:'补充信息',hint:'没有更紧急事项时完善资料',match:s=>['none','parsing','stale'].includes(s.data)||s.stage==='none',action:'让小 mo 更懂你',title:'信息更完整，建议才会更安全、更准确。',copy:'可以先补一项，不需要一次填完；暂时未知的内容会明确标出来。',target:'资料补充',data:'信息缺口',safety:'渐进授权'}
+      ];
+
+      function currentPriority() {
+        return priorityRules.find(rule=>rule.match(state.userState)) || priorityRules[priorityRules.length-1];
+      }
+
+      function renderStates() {
+        const host=root.querySelector('#ew-state-dimensions'); if (!host) return;
+        host.innerHTML=stateDimensions.map(d=>`<div class="ew-dimension"><div class="ew-dimension-head"><span class="ew-dimension-title">${d.title}</span><span class="ew-dimension-note">${d.note}</span></div><div class="ew-state-options">${d.options.map(([value,label])=>`<button class="ew-state-option ${state.userState[d.key]===value?'is-active':''}" type="button" data-state-key="${d.key}" data-state-value="${value}">${label}</button>`).join('')}</div></div>`).join('');
+        const winner=currentPriority();
+        root.querySelector('#ew-priority-list').innerHTML=priorityRules.map((rule,index)=>`<div class="ew-priority-item ${rule.id===winner.id?'is-winner':''}"><span class="ew-priority-rank">${index+1}</span><div class="ew-priority-label"><strong>${rule.label}</strong><span>${rule.hint}</span></div><span class="ew-mini-chip">${rule.id===winner.id?'当前命中':'顺位'}</span></div>`).join('');
+        root.querySelector('#ew-home-title').textContent=winner.title;
+        root.querySelector('#ew-home-copy').textContent=winner.copy;
+        root.querySelector('#ew-home-action').textContent=winner.action;
+        root.querySelector('#ew-home-reason').textContent=`当前状态：${stateDimensions.map(d=>d.options.find(o=>o[0]===state.userState[d.key])?.[1]).join(' · ')}`;
+        root.querySelector('#ew-home-target').textContent=winner.target;
+        root.querySelector('#ew-home-data').textContent=winner.data;
+        root.querySelector('#ew-home-safety').textContent=winner.safety;
+      }
+
       function renderVersions() {
         root.querySelector('#ew-version-list').innerHTML = versions.map((v,index) => `<div class="ew-version-card"><div class="ew-version-date">${v.date}</div><div><div class="ew-version-name">${v.name}</div><div class="ew-version-change">${v.change}</div></div>${v.snapshot?`<button class="ew-button" type="button" data-restore-version="${index}">恢复此版本</button>`:`<span class="ew-mini-chip">${v.status}</span>`}</div>`).join('');
       }
@@ -1160,6 +1392,7 @@
         root.querySelectorAll('[data-page]').forEach(b => b.classList.toggle('is-active',b.dataset.page===page));
         root.querySelectorAll('[data-page-panel]').forEach(p => p.classList.toggle('is-active',p.dataset.pagePanel===page));
         if (page==='library') renderLibrary();
+        if (page==='states') renderStates();
         if (page==='data') renderData();
         if (page==='versions') renderVersions();
       }
@@ -1173,7 +1406,7 @@
         renderLibrary();
         renderData();
         persistWorkspace();
-        toast(state.viewMode==='business'?'已切换为业务视图':'已展开交付与开发信息');
+        toast(state.viewMode==='business'?'已切换为业务方视图':'已展开交付与开发信息');
       }
 
       function uniqueSequence(items) {
@@ -1198,14 +1431,14 @@
         if (stage==='待复测') modulesForJourney.push('HD-06','PL-08','SV-05','SV-06','NT-01');
 
         if (data==='等待') modulesForJourney.push('HD-01','NT-01');
-        else if (data==='完整') modulesForJourney.push('HD-02','HD-04','HD-03');
+        else if (data==='完整') modulesForJourney.push('HD-02','HD-04','HD-03','ISSUE-01');
         else modulesForJourney.push('AI-03');
 
         if (goal!=='report') modulesForJourney.push('RT-02','RT-03','RT-04','SV-01');
         if (goal==='report') modulesForJourney.push('AI-01','RT-04');
-        if (goal==='free-plan') modulesForJourney.push('PL-01','PL-02','PL-03','PL-05','PL-08','AI-01','NT-01');
+        if (goal==='free-plan') modulesForJourney.push('ACT-01','PL-01','PL-03','PL-05','PL-08','AI-01','NT-01');
         if (goal==='managed-service') modulesForJourney.push('SV-02','SV-03','PAY-01','PAY-02','PAY-03','PAY-04','PAY-05','PAY-06','SV-05','SV-06','AI-01');
-        if (goal==='product') modulesForJourney.push('PL-01','SV-02','CM-03','PAY-01','PAY-02','PAY-03','PAY-04','PAY-05','PAY-06','CM-04','AI-01');
+        if (goal==='product') modulesForJourney.push('ACT-01','PL-01','SUP-01','SUP-02','SV-02','CM-03','PAY-01','PAY-02','PAY-03','PAY-04','PAY-05','PAY-06','CM-04','AI-01');
         if (goal==='visit') modulesForJourney.push('SV-02','SV-03','SV-04','PAY-01','PAY-02','PAY-03','PAY-04','PAY-05','PAY-06','SV-05','NT-01');
         if (goal==='membership') modulesForJourney.push('MB-01','MB-02','PAY-01','PAY-02','PAY-03','PAY-04','PAY-05','PAY-06','PAY-09');
 
@@ -1225,7 +1458,7 @@
 
       function applyRecipe(id) {
         const r = recipes.find(x => x.id===id); if (!r) return;
-        state.recipe=id; state.selected=r.modules[Math.min(5,r.modules.length-1)]; state.added=[];
+        state.recipe=id; state.openGroup=r.priority; state.selected=r.modules[Math.min(5,r.modules.length-1)]; state.added=[];
         root.querySelector('#ew-source').value=r.source;
         root.querySelector('#ew-theme').value=r.theme;
         root.querySelector('#ew-service').value=r.service || '通用';
@@ -1235,7 +1468,7 @@
         state.goal=r.goal || 'report';
         root.querySelector('#ew-goal').value=state.goal;
         root.querySelectorAll('#ew-depth button').forEach(b=>b.classList.toggle('is-active',b.dataset.value===state.depth));
-        renderRecipes(); renderFlow(); persistWorkspace(); toast(`已切换到“${r.title}”场景方案`);
+        renderRecipes(); renderFlow(); persistWorkspace(); toast(`已切换到“${r.title}”`);
       }
 
       let toastTimer;
@@ -1253,6 +1486,27 @@
         setTimeout(()=>{ anchor.remove(); URL.revokeObjectURL(url); },1000);
       }
 
+      function analyzeDemand() {
+        const input=(root.querySelector('#ew-demand-input').value || '').trim();
+        if (!input) { toast('请先写下业务方的需求原话'); return false; }
+        const hasReport=/报告|检查|检验|体检|结果|指标/.test(input);
+        const hasProduct=/营养|补剂|商品|购买|下单|支付|价格/.test(input);
+        const hasService=/健管|管理|服务|医生|客服|人工|预约|到院/.test(input);
+        const hasMember=/会员|权益|积分|常青客/.test(input);
+        const hasVenue=/探索馆|展馆|设备|IoT|到馆/.test(input);
+        const tabs=['健康 NOW']; if (hasMember||hasProduct||hasService) tabs.push('常青客'); if (hasVenue) tabs.push('LIFE 探索馆');
+        const modules=[]; if (hasReport) modules.push('报告摘要','健康问题','判断依据'); if (hasProduct) modules.push('行动建议','商品详情','订单支付'); if (hasService) modules.push('服务详情','预约／进度','人工联系'); if (hasMember) modules.push('会员身份','权益记录'); if (!modules.length) modules.push('动态首页','小 mo','资料补充');
+        const data=[]; if (hasReport) data.push('报告与指标'); if (hasProduct) data.push('适用性、商品、价格'); if (hasService) data.push('服务状态与团队'); if (hasMember) data.push('会员与权益'); if (!data.length) data.push('用户状态与需求依据');
+        root.querySelector('#ew-analysis-summary').textContent='以下内容由工作台根据业务原话生成，需由产品经理确认后才能进入正式方案。';
+        root.querySelector('#ew-impact-tabs').textContent=[...new Set(tabs)].join('、');
+        root.querySelector('#ew-impact-users').textContent=hasReport?'结果待看／发现问题':hasService?'服务进行中／近期有事项':'根据实际数据与身份继续确认';
+        root.querySelector('#ew-impact-modules').textContent=[...new Set(modules)].join('、');
+        root.querySelector('#ew-impact-data').textContent=[...new Set(data)].join('、');
+        root.querySelector('#ew-impact-service').textContent=hasService?'业务服务团队＋Everlife App':hasProduct?'商品、交易与售后团队':'待业务方补充承接人';
+        root.querySelector('#ew-impact-risk').textContent=hasProduct&&hasReport?'推荐依据、专业审核、支付与售后':hasService?'服务边界、人员响应与状态回写':'需求证据、数据来源与优先级待确认';
+        return true;
+      }
+
       function toggleCurrentModule() {
         const id=state.selected; const recipe=currentRecipe();
         const label=byId(id)?.name || id;
@@ -1267,7 +1521,11 @@
       }
 
       root.addEventListener('click', event => {
+        const stateOption=event.target.closest('[data-state-key]');
+        if (stateOption) { state.userState[stateOption.dataset.stateKey]=stateOption.dataset.stateValue; renderStates(); persistWorkspace(); return; }
         const mode=event.target.closest('button[data-view-mode]'); if (mode) return switchViewMode(mode.dataset.viewMode);
+        const appTab=event.target.closest('[data-app-tab]'); if (appTab) return switchAppTab(appTab.dataset.appTab);
+        const userGroup=event.target.closest('[data-user-group]'); if (userGroup) { state.openGroup=state.openGroup===userGroup.dataset.userGroup?'':userGroup.dataset.userGroup; renderRecipes(); persistWorkspace(); return; }
         const recipeButton=event.target.closest('[data-recipe]'); if (recipeButton) return applyRecipe(recipeButton.dataset.recipe);
         const nav=event.target.closest('[data-page]'); if (nav) return switchPage(nav.dataset.page);
         const node=event.target.closest('[data-module]'); if (node) { state.selected=node.dataset.module; renderFlow(); return; }
@@ -1280,18 +1538,31 @@
         const locked=event.target.closest('[data-locked]'); if (locked) { toast('该 Tab 当前为待解锁，只保留公共能力依赖'); return; }
         const action=event.target.closest('[data-action]');
         if (action) {
+          if (action.dataset.action==='analyze-demand') { if (analyzeDemand()) toast('已生成影响分析初稿'); return; }
+          if (action.dataset.action==='save-demand') { if (!analyzeDemand()) return; versions.unshift({date:new Date().toLocaleString('zh-CN',{hour12:false}).replaceAll('/','-'),name:'需求卡 · 待产品确认',change:root.querySelector('#ew-demand-input').value.trim().slice(0,80),status:'待确认'}); renderVersions(); persistWorkspace(); toast('需求卡已保存到交付中心'); return; }
+          if (action.dataset.action==='demand-to-design') { if (!analyzeDemand()) return; switchPage('assembly'); toast('已进入方案设计，请确认用户状态和旅程'); return; }
+          if (action.dataset.action==='state-to-journey') {
+            const p=currentPriority();
+            const stageMap={'none':'待解读','new-result':'待解读','issue':'待解读','action':'执行中','validation':'待复测','closed':'待复测'};
+            const dataMap={'none':'无','parsing':'少量','usable':'完整','stale':'少量'};
+            root.querySelector('#ew-stage').value=stageMap[state.userState.stage] || '待解读';
+            root.querySelector('#ew-data').value=dataMap[state.userState.data] || '少量';
+            state.goal=p.id==='result'?'report':p.id==='retest'?'visit':p.id==='action'?'managed-service':'report';
+            root.querySelector('#ew-goal').value=state.goal;
+            switchPage('assembly'); assembleFromBusinessConditions(); toast('已把当前用户状态带入旅程'); return;
+          }
           if (action.dataset.action==='auto-assemble') assembleFromBusinessConditions();
           if (action.dataset.action==='prototype-prev') movePrototype(-1);
           if (action.dataset.action==='prototype-next') movePrototype(1);
           if (action.dataset.action==='toggle-module') toggleCurrentModule();
           if (action.dataset.action==='toggle-data-tech') { state.dataTech=!state.dataTech; renderDataDetail(); persistWorkspace(); }
-          if (action.dataset.action==='save') { const snapshot=captureWorkspace(); versions.unshift({date:new Date().toLocaleString('zh-CN',{hour12:false}).replaceAll('/','-'),name:`${currentRecipe().title} · 场景版本`,change:`保存 ${activeModuleIds().length} 个步骤，主题为${root.querySelector('#ew-theme').value}，支持程度为${state.depth}。`,status:'探索中',snapshot}); persistWorkspace(); renderVersions(); toast('当前场景方案已保存，可在下次打开时继续'); }
+          if (action.dataset.action==='save') { const snapshot=captureWorkspace(); versions.unshift({date:new Date().toLocaleString('zh-CN',{hour12:false}).replaceAll('/','-'),name:`${currentRecipe().title} · 方案版本`,change:`保存 ${activeModuleIds().length} 个步骤，主题为${root.querySelector('#ew-theme').value}，支持程度为${state.depth}。`,status:'探索中',snapshot}); persistWorkspace(); renderVersions(); toast('当前产品方案已保存，可在下次打开时继续'); }
           if (action.dataset.action==='import') root.querySelector('#ew-import-file').click();
           if (action.dataset.action==='backup') {
             const payload={...captureWorkspace(),versions}; downloadJson(payload,'everlife-workbench-backup.json'); toast('工作台备份已导出');
           }
           if (action.dataset.action==='export') {
-            const payload={workbench_version:'0.5',scenario:currentRecipe().id,title:currentRecipe().title,config:{source:root.querySelector('#ew-source').value,theme:root.querySelector('#ew-theme').value,service_template:root.querySelector('#ew-service').value,service_stage:root.querySelector('#ew-stage').value,support_level:state.depth,data:root.querySelector('#ew-data').value,goal:state.goal},prototype_screens:prototypeModuleIds(),journey_steps:activeModuleIds().map(id=>{const m=byId(id);return{id:m.id,name:m.name,readiness:readiness(m.maturity),technical_level:m.maturity,visible_in_prototype:isPrototypeScreen(m),dependencies:m.deps};})};
+            const payload={workbench_version:'1.2',scenario:currentRecipe().id,title:currentRecipe().title,config:{source:root.querySelector('#ew-source').value,theme:root.querySelector('#ew-theme').value,service_template:root.querySelector('#ew-service').value,service_stage:root.querySelector('#ew-stage').value,support_level:state.depth,data:root.querySelector('#ew-data').value,goal:state.goal},prototype_screens:prototypeModuleIds(),journey_steps:activeModuleIds().map(id=>{const m=byId(id);return{id:m.id,name:m.name,readiness:readiness(m.maturity),technical_level:m.maturity,visible_in_prototype:isPrototypeScreen(m),dependencies:m.deps};})};
             downloadJson(payload,`everlife-${currentRecipe().id.toLowerCase()}-handoff.json`); toast('已导出当前场景的交付清单');
           }
           if (action.dataset.action==='export-dictionary') {
@@ -1316,9 +1587,14 @@
       });
 
       const restored=hydrateWorkspace();
+      state.openGroup='';
+      if (!recipes.some(recipe=>recipe.id===state.recipe)) state.recipe='J04';
       root.dataset.viewMode=state.viewMode==='delivery'?'delivery':'business';
       root.querySelectorAll('[data-view-mode]').forEach(button=>button.classList.toggle('is-active',button.dataset.viewMode===root.dataset.viewMode));
-      renderRecipes(); renderFlow(); renderLibrary(); renderData(); renderVersions(); switchPage(state.page || 'assembly');
+      if (!['health','member'].includes(state.appTab)) state.appTab='health';
+      root.querySelectorAll('[data-app-tab]').forEach(button=>button.classList.toggle('is-active',button.dataset.appTab===state.appTab));
+      if (!state.userState) state.userState={data:'usable',stage:'new-result',event:'none',identity:'self-pay'};
+      renderRecipes(); renderFlow(); renderLibrary(); renderData(); renderStates(); renderVersions(); switchPage(state.page || 'assembly');
       if (restored) setTimeout(()=>toast('已恢复上次工作进度'),180);
     })();
   </script>
