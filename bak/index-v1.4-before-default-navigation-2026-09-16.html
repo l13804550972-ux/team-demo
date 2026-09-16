@@ -197,13 +197,8 @@
     #everlife-workbench-v0 .ew-nav-icon { width: 18px; text-align: center; color: var(--ew-faint); }
     #everlife-workbench-v0 .ew-nav-count { margin-left: auto; font-variant-numeric: tabular-nums; color: var(--ew-faint); font-size: 11px; }
     #everlife-workbench-v0 .ew-nav-status { width:8px; height:8px; margin-left:auto; border-radius:50%; background:var(--ew-warning); box-shadow:0 0 0 3px var(--ew-warning-soft); }
-    #everlife-workbench-v0 .ew-solution-picker-toggle { display:none; width:calc(100% - 30px); min-height:30px; margin:2px 5px 5px 25px; padding:0 8px 0 11px; align-items:center; justify-content:space-between; border:0; border-left:1px solid var(--ew-line); background:transparent; color:var(--ew-faint); font:inherit; font-size:9px; cursor:pointer; text-align:left; }
-    #everlife-workbench-v0[data-active-page="assembly"] .ew-solution-picker-toggle { display:flex; }
-    #everlife-workbench-v0 .ew-solution-picker-toggle:hover { color:var(--ew-ink); }
-    #everlife-workbench-v0 .ew-solution-picker-toggle::after { content:"⌄"; font-size:13px; line-height:1; transition:transform 150ms ease; }
-    #everlife-workbench-v0 .ew-solution-picker-toggle.is-open::after { transform:rotate(180deg); }
     #everlife-workbench-v0 .ew-solution-users { display:none; margin:2px 5px 10px 25px; padding:7px 0 7px 10px; border-left:1px solid var(--ew-line); }
-    #everlife-workbench-v0[data-active-page="assembly"] .ew-solution-users.is-open { display:grid; gap:5px; }
+    #everlife-workbench-v0[data-active-page="assembly"] .ew-solution-users { display:grid; gap:5px; }
     #everlife-workbench-v0 .ew-recipe-list {
       padding: 5px 12px 14px;
       display: grid;
@@ -673,7 +668,7 @@
     <div class="ew-brand"><span class="ew-brand-mark">E</span><span>Everlife 工作台</span></div>
     <div class="ew-top-context">
       <span class="ew-project-name">Everlife｜产品设计与交付</span>
-      <span class="ew-version">v1.5</span>
+      <span class="ew-version">v1.4</span>
       <span class="ew-status-chip">共创中</span>
     </div>
     <div class="ew-top-actions">
@@ -695,7 +690,6 @@
         <button class="ew-nav-button is-active" type="button" data-page="home"><span class="ew-nav-icon">⌂</span><span>首页</span></button>
         <button class="ew-nav-button" type="button" data-page="needs"><span class="ew-nav-icon">＋</span><span>需求台</span></button>
         <button class="ew-nav-button" type="button" data-page="assembly"><span class="ew-nav-icon">↝</span><span>方案设计</span><span class="ew-nav-status" id="ew-design-status" title="存在待确认项"></span></button>
-        <button class="ew-solution-picker-toggle" id="ew-solution-picker-toggle" type="button" data-action="toggle-solution-users" aria-expanded="false"><span id="ew-solution-picker-label">选择代表用户</span></button>
         <div class="ew-solution-users" id="ew-solution-users"><div class="ew-solution-current">当前：<strong id="ew-current-user-name">在管服务用户</strong></div><div class="ew-user-groups" id="ew-recipe-list"></div></div>
         <button class="ew-nav-button" type="button" data-page="library"><span class="ew-nav-icon">▦</span><span>产品资产</span><span class="ew-nav-count">52</span></button>
         <button class="ew-nav-button" type="button" data-page="versions"><span class="ew-nav-icon">✓</span><span>交付中心</span><span class="ew-nav-count">6</span></button>
@@ -1055,10 +1049,9 @@
         JX:{thought:'别让我重新来一次。',known:'资料已保留 · 关联未完成',title:'资料没有丢失',fact:'补充一项信息后继续',basis:'当前处理进度',action:'继续处理'}
       };
 
-      const releaseVersion = {date:'2026-09-17 00:15',name:'工作台 V1.5 默认入口规则',change:'每次打开工作台默认进入首页；方案设计的代表用户入口默认收起；切换代表用户后默认选中并展示首页重点任务。',status:'共创中'};
+      const releaseVersion = {date:'2026-09-16 23:55',name:'工作台 V1.4 初体验与原型聚焦',change:'初体验三项合并为醒目整体；首页重点任务独立标识；手机原型移至右侧并在切换用户时优先展示入口任务。',status:'共创中'};
       const versions = [
         releaseVersion,
-        {date:'2026-09-16 23:55',name:'工作台 V1.4 初体验与原型聚焦',change:'初体验三项合并为醒目整体；首页重点任务独立标识；手机原型移至右侧并在切换用户时优先展示入口任务。',status:'已记录'},
         {date:'2026-09-16 23:30',name:'工作台 V1.3 健康 NOW 初体验',change:'为八类代表用户增加“心里话—已知事实—首次回应”；手机首屏收紧为一句判断、一个事实和一个主操作。',status:'已记录'},
         {date:'2026-09-16 23:00',name:'工作台 V1.2 默认折叠代表用户',change:'代表用户分组在每次打开工作台时默认折叠，由使用者按需展开，减少左侧导航占用。',status:'已记录'},
         {date:'2026-09-16 22:30',name:'工作台 V1.1 左侧代表用户导航',change:'代表用户移入方案设计左侧折叠菜单；四组以克制色彩区分，主画布直接进入当前用户旅程。',status:'已记录'},
@@ -1076,9 +1069,9 @@
         {date:'2026-08-25 13:30',name:'三条参考旅程 V0.4',change:'验证本地体检、异地高价值、公域新客共用同一内核，通过配方改变首页与下一步。',status:'待确认'}
       ];
 
-      const STORAGE_KEY = 'everlife-design-workbench-v1.5';
-      const LEGACY_STORAGE_KEY = 'everlife-design-workbench-v1.4';
-      const state = {page:'home',viewMode:'business',appTab:'health',openGroup:'',solutionUsersOpen:false,recipe:'J04',selected:'HOME-01',depth:'专项',goal:'managed-service',filter:'全部',query:'',added:[],dataFilter:'全部',dataQuery:'',dataSelected:'BO-01',dataTech:false,userState:{data:'usable',stage:'action',event:'service',identity:'managed'} };
+      const STORAGE_KEY = 'everlife-design-workbench-v1.4';
+      const LEGACY_STORAGE_KEY = 'everlife-design-workbench-v1.3';
+      const state = {page:'home',viewMode:'business',appTab:'health',openGroup:'',recipe:'J04',selected:'ID-01',depth:'专项',goal:'managed-service',filter:'全部',query:'',added:[],dataFilter:'全部',dataQuery:'',dataSelected:'BO-01',dataTech:false,userState:{data:'usable',stage:'action',event:'service',identity:'managed'} };
       const byId = id => modules.find(m => m.id === id);
       const currentRecipe = () => recipes.find(r => r.id === state.recipe) || recipes[0];
       const activeModuleIds = () => [...currentRecipe().modules, ...state.added.filter(id => !currentRecipe().modules.includes(id))];
@@ -1102,7 +1095,7 @@
 
       function captureWorkspace() {
         return {
-          workbench_version:'1.5',
+          workbench_version:'1.4',
           saved_at:new Date().toISOString(),
           state:{...state,added:[...state.added]},
           recipes:recipes.map(r=>({...r,modules:[...r.modules]})),
@@ -1164,12 +1157,6 @@
       function renderRecipes() {
         const host = root.querySelector('#ew-recipe-list');
         if (!host) return;
-        const picker=root.querySelector('#ew-solution-users');
-        const toggle=root.querySelector('#ew-solution-picker-toggle');
-        picker?.classList.toggle('is-open',Boolean(state.solutionUsersOpen));
-        toggle?.classList.toggle('is-open',Boolean(state.solutionUsersOpen));
-        if (toggle) toggle.ariaExpanded=String(Boolean(state.solutionUsersOpen));
-        root.querySelector('#ew-solution-picker-label').textContent=state.solutionUsersOpen?'收起代表用户':'选择代表用户';
         const groups=[['core','核心验证'],['focus','重点覆盖'],['compatible','兼容考虑'],['exception','横向异常']];
         host.innerHTML=groups.map(([key,label])=>{const items=recipes.filter(r=>r.priority===key);return `<div class="ew-user-group ${state.openGroup===key?'is-open':''}" data-priority="${key}"><button class="ew-user-group-label" type="button" data-user-group="${key}">${label}<span class="ew-user-group-count">${items.length}</span></button><div class="ew-user-group-list">${items.map(r=>`<button class="ew-recipe-button ${r.id===state.recipe?'is-active':''}" type="button" data-recipe="${r.id}"><span class="ew-recipe-dot"></span><span><span class="ew-recipe-title">${r.title}</span><span class="ew-recipe-meta">${state.viewMode==='business'?r.meta:`${r.id} · ${r.meta}`}</span></span></button>`).join('')}</div></div>`;}).join('');
       }
@@ -1524,7 +1511,8 @@
 
       function applyRecipe(id) {
         const r = recipes.find(x => x.id===id); if (!r) return;
-        const entryModule = r.modules.includes('HOME-01') ? 'HOME-01' : r.modules[0];
+        const loginFirst = ['J04','J07','J01','J03','J02','JX'].includes(r.id);
+        const entryModule = loginFirst && r.modules.includes('ID-01') ? 'ID-01' : (r.modules.includes('HOME-01') ? 'HOME-01' : r.modules[0]);
         state.recipe=id; state.openGroup=r.priority; state.selected=entryModule; state.added=[];
         root.querySelector('#ew-source').value=r.source;
         root.querySelector('#ew-theme').value=r.theme;
@@ -1535,7 +1523,7 @@
         state.goal=r.goal || 'report';
         root.querySelector('#ew-goal').value=state.goal;
         root.querySelectorAll('#ew-depth button').forEach(b=>b.classList.toggle('is-active',b.dataset.value===state.depth));
-        renderRecipes(); renderFlow(); persistWorkspace(); toast(`已切换到“${r.title}”，当前展示首页重点任务`);
+        renderRecipes(); renderFlow(); persistWorkspace(); toast(`已切换到“${r.title}”`);
       }
 
       let toastTimer;
@@ -1606,7 +1594,6 @@
         const action=event.target.closest('[data-action]');
         if (action) {
           if (action.dataset.action==='analyze-demand') { if (analyzeDemand()) toast('已生成影响分析初稿'); return; }
-          if (action.dataset.action==='toggle-solution-users') { state.solutionUsersOpen=!state.solutionUsersOpen; if (!state.solutionUsersOpen) state.openGroup=''; renderRecipes(); persistWorkspace(); return; }
           if (action.dataset.action==='save-demand') { if (!analyzeDemand()) return; versions.unshift({date:new Date().toLocaleString('zh-CN',{hour12:false}).replaceAll('/','-'),name:'需求卡 · 待产品确认',change:root.querySelector('#ew-demand-input').value.trim().slice(0,80),status:'待确认'}); renderVersions(); persistWorkspace(); toast('需求卡已保存到交付中心'); return; }
           if (action.dataset.action==='demand-to-design') { if (!analyzeDemand()) return; switchPage('assembly'); toast('已进入方案设计，请确认用户状态和旅程'); return; }
           if (action.dataset.action==='state-to-journey') {
@@ -1630,7 +1617,7 @@
             const payload={...captureWorkspace(),versions}; downloadJson(payload,'everlife-workbench-backup.json'); toast('工作台备份已导出');
           }
           if (action.dataset.action==='export') {
-            const payload={workbench_version:'1.5',scenario:currentRecipe().id,title:currentRecipe().title,config:{source:root.querySelector('#ew-source').value,theme:root.querySelector('#ew-theme').value,service_template:root.querySelector('#ew-service').value,service_stage:root.querySelector('#ew-stage').value,support_level:state.depth,data:root.querySelector('#ew-data').value,goal:state.goal},prototype_screens:prototypeModuleIds(),journey_steps:activeModuleIds().map(id=>{const m=byId(id);return{id:m.id,name:m.name,readiness:readiness(m.maturity),technical_level:m.maturity,visible_in_prototype:isPrototypeScreen(m),dependencies:m.deps};})};
+            const payload={workbench_version:'1.4',scenario:currentRecipe().id,title:currentRecipe().title,config:{source:root.querySelector('#ew-source').value,theme:root.querySelector('#ew-theme').value,service_template:root.querySelector('#ew-service').value,service_stage:root.querySelector('#ew-stage').value,support_level:state.depth,data:root.querySelector('#ew-data').value,goal:state.goal},prototype_screens:prototypeModuleIds(),journey_steps:activeModuleIds().map(id=>{const m=byId(id);return{id:m.id,name:m.name,readiness:readiness(m.maturity),technical_level:m.maturity,visible_in_prototype:isPrototypeScreen(m),dependencies:m.deps};})};
             downloadJson(payload,`everlife-${currentRecipe().id.toLowerCase()}-handoff.json`); toast('已导出当前场景的交付清单');
           }
           if (action.dataset.action==='export-dictionary') {
@@ -1656,15 +1643,13 @@
 
       const restored=hydrateWorkspace();
       state.openGroup='';
-      state.solutionUsersOpen=false;
-      state.page='home';
       if (!recipes.some(recipe=>recipe.id===state.recipe)) state.recipe='J04';
       root.dataset.viewMode=state.viewMode==='delivery'?'delivery':'business';
       root.querySelectorAll('[data-view-mode]').forEach(button=>button.classList.toggle('is-active',button.dataset.viewMode===root.dataset.viewMode));
       if (!['health','member'].includes(state.appTab)) state.appTab='health';
       root.querySelectorAll('[data-app-tab]').forEach(button=>button.classList.toggle('is-active',button.dataset.appTab===state.appTab));
       if (!state.userState) state.userState={data:'usable',stage:'new-result',event:'none',identity:'self-pay'};
-      renderRecipes(); renderFlow(); renderLibrary(); renderData(); renderStates(); renderVersions(); switchPage('home');
+      renderRecipes(); renderFlow(); renderLibrary(); renderData(); renderStates(); renderVersions(); switchPage(state.page || 'assembly');
       if (restored) setTimeout(()=>toast('已恢复上次工作进度'),180);
     })();
   </script>
