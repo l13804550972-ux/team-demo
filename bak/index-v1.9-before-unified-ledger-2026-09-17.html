@@ -769,7 +769,7 @@
     <div class="ew-brand"><span class="ew-brand-mark">E</span><span>Everlife App 工作台</span></div>
     <div class="ew-top-context">
       <span class="ew-project-name">Everlife｜产品设计与交付</span>
-      <span class="ew-version">v1.10</span>
+      <span class="ew-version">v1.9</span>
       <span class="ew-status-chip">共创中</span>
     </div>
     <div class="ew-top-actions">
@@ -1083,12 +1083,7 @@
         ['PAY-06','权益／服务开通结果','支付与交易','L1','体验模块','支付后确认会员或服务是否已经开通。','支付结果、履约','开通状态','会员/服务域'],
         ['PAY-07','退款与售后','支付与交易','L0','高风险能力','退款资格、申请、审核和到账状态。','订单、履约、规则','售后单','订单服务'],
         ['PAY-08','发票','支付与交易','L0','候选','管理开票资格、抬头和发票状态。','订单、开票信息','发票记录','财税服务'],
-        ['PAY-09','交易记录','支付与交易','L1','体验模块','在常青客查看订单、支付、退款和发票。','交易事件','交易列表','常青客'],
-        ['LG-00','统一账本编排','统一账本','L1','架构核心','按同一个 Everlife 客户连接交易、权益、积分和服务变化；统一口径，但不把四类记录混成一张表。','Everlife ID、来源业务、账本事件','当前账户状态、明细与理由码','One ID、交易、权益、积分、服务'],
-        ['LG-01','交易账本','统一账本','L1','平台能力','记录下单、支付、退款和冲正；资金事实以服务端确认结果为准。','订单、支付、退款事件','交易状态、金额与历史明细','PAY-03, PAY-05, PAY-07'],
-        ['LG-02','权益账本','统一账本','L1','平台能力','记录权益的发放、使用、冻结、退回和到期，避免各业务分别计算剩余次数。','权益包、订单、核销事件','可用权益、有效期与使用记录','MB-02, PAY-06'],
-        ['LG-03','积分账本','统一账本','L0','业务配置','预留积分获得、使用、过期和抵扣的统一记录结构；今年不预设积分规则。','积分规则、积分事件','积分余额与明细','积分体系待确认'],
-        ['LG-04','服务账本','统一账本','L1','平台能力','记录服务获得、开通、阶段、剩余内容、暂停和结束，让跨业务服务进度可查。','服务订单、权益、履约事件','进行中服务、阶段与剩余内容','SV-05, PAY-06, CM-04']
+        ['PAY-09','交易记录','支付与交易','L1','体验模块','在常青客查看订单、支付、退款和发票。','交易事件','交易列表','常青客']
       ].map(row => ({id:row[0],name:row[1],domain:row[2],maturity:row[3],kind:row[4],desc:row[5],input:row[6],output:row[7],deps:row[8]}));
 
       const dataObjects = [
@@ -1131,20 +1126,18 @@
         ['BO-37','Invoice','发票','支付与财务','与订单及实际支付关联的开票申请和结果，金额不能由前端自行计算。','财税服务','用户、客服与财务','开票申请、发票状态和订单记录','探索中','invoice_id|发票 ID|UUID|是;order_id|订单 ID|UUID|是;title_type|抬头类型|enum|是;invoice_status|发票状态|enum|是'],
         ['BO-38','ProgramTemplate','健康服务模板','项目配置','定义 ACT、BPC 及后续项目共用的周期、阶段、行动、复测和提醒结构。','产品工作台 / 方案服务','产品、业务、专业审核与开发团队','按业务需求组装旅程和创建服务实例','已形成 ACT／BPC 共性配置表，字段待接口确认','template_id|模板 ID|UUID|是;business_code|业务来源|string|是;duration_days|服务周期|integer|否;stage_definitions|阶段定义|array|是;action_types|行动类型|array|是;review_policy|审核规则|object|是;retest_policy|复测规则|object|否'],
         ['BO-39','ServiceStageInstance','服务阶段实例','项目配置','记录某位用户当前处于到院前、执行中、待复测或已结案等阶段。','服务项目系统 / 拓诊 / 临时数据源','本人、授权服务团队与产品编排','动态首页、项目进度、提醒和下一步','产品结构已确认，来源和回写待联调','stage_instance_id|阶段实例 ID|UUID|是;service_project_id|服务项目 ID|UUID|是;stage_code|阶段编码|string|是;stage_status|阶段状态|enum|是;started_at|开始时间|datetime|否;expected_end_at|预计结束时间|datetime|否'],
-        ['BO-40','PlanReviewRecord','方案审核记录','项目配置','记录 AI 或人工草稿由谁审核、何时发布以及当前生效版本。','拓诊 / 方案服务','审核人员、本人及授权服务团队','方案发布标识、版本追踪和安全审计','已确认必须审核后发布，具体角色待项目配置','review_id|审核记录 ID|UUID|是;program_id|方案实例 ID|UUID|是;reviewer_role|审核角色|string|是;review_status|审核状态|enum|是;published_version|发布版本|string|否;reviewed_at|审核时间|datetime|否'],
-        ['BO-41','LedgerAccount','统一账本账户','统一账本','以 Everlife 客户为主体，分别维护交易、权益、积分和服务四类账本账户；是统一查询入口，不是把不同业务数据混成一张表。','数据中台 / 账本服务','本人、客服及按职责授权的系统','常青客资产总览、健康 NOW 当前任务、跨业务对账','P0 建议：交易、权益、服务；积分仅预留结构','ledger_account_id|账本账户 ID|UUID|是;customer_id|客户 ID|UUID|是;ledger_type|账本类型|enum|是;account_status|账户状态|enum|是;updated_at|更新时间|datetime|是'],
-        ['BO-42','LedgerEntry','账本流水','统一账本','每次获得、使用、支付、退款、暂停或到期都形成不可覆盖的流水；发生错误时以新流水冲正，不直接修改历史。','订单、权益、积分与履约系统','本人看结果；客服、财务和审计按权限查看明细','余额计算、来源追溯、退款恢复与争议处理','P0 字段建议，具体事件码与责任系统待接口确认','entry_id|流水 ID|UUID|是;ledger_account_id|账本账户 ID|UUID|是;event_type|事件类型|enum|是;source_business|来源业务|string|是;business_reference_id|业务单据 ID|UUID|是;change_value|本次变化|string|是;balance_after|变化后余额|string|否;reason_code|原因码|string|是;occurred_at|发生时间|datetime|是;idempotency_key|防重复键|string|是']
+        ['BO-40','PlanReviewRecord','方案审核记录','项目配置','记录 AI 或人工草稿由谁审核、何时发布以及当前生效版本。','拓诊 / 方案服务','审核人员、本人及授权服务团队','方案发布标识、版本追踪和安全审计','已确认必须审核后发布，具体角色待项目配置','review_id|审核记录 ID|UUID|是;program_id|方案实例 ID|UUID|是;reviewer_role|审核角色|string|是;review_status|审核状态|enum|是;published_version|发布版本|string|否;reviewed_at|审核时间|datetime|否']
       ].map(row => ({id:row[0],key:row[1],name:row[2],group:row[3],definition:row[4],source:row[5],permission:row[6],usage:row[7],status:row[8],fields:row[9].split(';').map(field=>{const parts=field.split('|');return{key:parts[0],name:parts[1],type:parts[2],required:parts[3]};})}));
 
       const recipes = [
-        {id:'J04',priority:'core',title:'在管服务用户',meta:'核心用户 · 已付费 · 履约中',desc:'正在接受专项或长期健康管理，首页优先展示当前阶段、今日任务、专业团队和下一验证节点。',modules:['ID-01','ID-03','ID-02','ID-04','HOME-01','HD-02','ISSUE-01','PL-09','PL-07','PL-03','PL-05','SV-05','SV-06','LG-04','AI-01','AI-05','NT-01','HD-06','PL-08','MB-02'],source:'既有医疗客户',theme:'糖胖管理',service:'ACT',stage:'执行中',data:'完整',depth:'专项',goal:'managed-service'},
-        {id:'J07',priority:'core',title:'会员／多服务用户',meta:'核心用户 · 已付费 · 多关系',desc:'统一查看 Everlife 会员身份、业务权益包、多个服务项目、订单、团队和售后，不与健康结果重复建设。',modules:['ID-01','ID-03','HOME-01','MB-01','MB-02','LG-00','LG-01','LG-02','LG-04','SV-05','SV-06','CM-04','PAY-07','AI-01'],source:'既有医疗客户',theme:'暂无专项',service:'通用',stage:'执行中',data:'完整',depth:'深度',goal:'membership'},
+        {id:'J04',priority:'core',title:'在管服务用户',meta:'核心用户 · 已付费 · 履约中',desc:'正在接受专项或长期健康管理，首页优先展示当前阶段、今日任务、专业团队和下一验证节点。',modules:['ID-01','ID-03','ID-02','ID-04','HOME-01','HD-02','ISSUE-01','PL-09','PL-07','PL-03','PL-05','SV-05','SV-06','AI-01','AI-05','NT-01','HD-06','PL-08','MB-02'],source:'既有医疗客户',theme:'糖胖管理',service:'ACT',stage:'执行中',data:'完整',depth:'专项',goal:'managed-service'},
+        {id:'J07',priority:'core',title:'会员／多服务用户',meta:'核心用户 · 已付费 · 多关系',desc:'统一查看 Everlife 会员身份、业务权益包、多个服务项目、订单、团队和售后，不与健康结果重复建设。',modules:['ID-01','ID-03','HOME-01','MB-01','MB-02','SV-05','SV-06','CM-04','PAY-07','AI-01'],source:'既有医疗客户',theme:'暂无专项',service:'通用',stage:'执行中',data:'完整',depth:'深度',goal:'membership'},
         {id:'J01',priority:'core',title:'线下检测用户',meta:'核心用户 · 已消费 · 待承接',desc:'完成检测后等待报告；报告生成时先看结论、异常值与原始报告，再进入行动、复查或服务。',modules:['ID-01','ID-03','ID-04','HOME-01','HD-01','HD-02','HD-04','HD-03','ISSUE-01','ACT-01','SV-01','NT-01'],source:'线下检测客户',theme:'糖胖管理',service:'通用',stage:'待解读',data:'等待',depth:'免费',goal:'report'},
-        {id:'J03',priority:'focus',title:'企业／团检用户',meta:'重点用户 · 组织付费',desc:'区分个人健康资料与组织提供的服务或权益；个人报告只按授权展示，组织关系不扩大健康数据权限。',modules:['ID-01','RT-01','ID-02','ID-03','ID-04','HOME-01','HD-01','HD-02','HD-04','ISSUE-01','MB-02','LG-02','SV-01','NT-01'],source:'团检客户',theme:'敏感肠胃',service:'通用',stage:'待解读',data:'完整',depth:'专项',goal:'report'},
+        {id:'J03',priority:'focus',title:'企业／团检用户',meta:'重点用户 · 组织付费',desc:'区分个人健康资料与组织提供的服务或权益；个人报告只按授权展示，组织关系不扩大健康数据权限。',modules:['ID-01','RT-01','ID-02','ID-03','ID-04','HOME-01','HD-01','HD-02','HD-04','ISSUE-01','MB-02','SV-01','NT-01'],source:'团检客户',theme:'敏感肠胃',service:'通用',stage:'待解读',data:'完整',depth:'专项',goal:'report'},
         {id:'J02',priority:'focus',title:'已有健康记录用户',meta:'重点用户 · 已有记录',desc:'已有历史报告、检查或就诊记录但暂无进行中服务；首页根据趋势、复查节点、数据时效或稳定状态给出唯一下一步。',modules:['ID-01','ID-03','ID-04','HOME-01','HD-02','HD-04','HD-06','ISSUE-01','AI-01','RT-04'],source:'既有医疗客户',theme:'血管斑块',service:'通用',stage:'待复测',data:'完整',depth:'免费',goal:'report'},
         {id:'J06',priority:'compatible',title:'已登录无数据用户',meta:'兼容用户 · 待建档',desc:'已有账户但暂时没有可用健康数据，通过上传、关联设备或短问答渐进补充，不强迫一次填完。',modules:['ID-01','ID-03','HOME-01','AI-03','IN-01','AI-01','RT-04'],source:'公域新客',theme:'暂无专项',service:'通用',stage:'待解读',data:'无',depth:'免费',goal:'free-plan'},
         {id:'J05',priority:'compatible',title:'公域游客',meta:'兼容用户 · 低门槛体验',desc:'无需先注册即可有限咨询或上传报告；需要保存、持续追踪和深度服务时再完成登录与授权。',modules:['ID-01','RT-01','HOME-01','AI-03','AI-01','IN-01'],source:'公域新客',theme:'暂无专项',service:'通用',stage:'待解读',data:'无',depth:'免费',goal:'free-plan'},
-        {id:'JX',priority:'exception',title:'异常状态用户',meta:'全旅程必备 · 异常恢复',desc:'横跨所有代表用户，覆盖身份、报告、权益、设备、方案、支付和服务异常，并帮助用户回到原任务。',modules:['ID-01','ID-02','ID-03','ID-04','HOME-01','AI-04','AI-05','PAY-06','PAY-07','LG-00','NT-01'],source:'线下检测客户',theme:'暂无专项',service:'通用',stage:'待解读',data:'少量',depth:'免费',goal:'report'}
+        {id:'JX',priority:'exception',title:'异常状态用户',meta:'全旅程必备 · 异常恢复',desc:'横跨所有代表用户，覆盖身份、报告、权益、设备、方案、支付和服务异常，并帮助用户回到原任务。',modules:['ID-01','ID-02','ID-03','ID-04','HOME-01','AI-04','AI-05','PAY-06','PAY-07','NT-01'],source:'线下检测客户',theme:'暂无专项',service:'通用',stage:'待解读',data:'少量',depth:'免费',goal:'report'}
       ];
 
       const firstExperiences = {
@@ -1158,10 +1151,9 @@
         JX:{thought:'别让我重新来一次',known:'资料已保留 · 停在报告关联步骤',title:'报告暂时没有关联成功',fact:'确认检测日期后，可以从这里继续',basis:'当前处理进度',card:'<div class="ew-phone-row"><span>已保留</span><strong style="color:#315f50">上传资料</strong></div><div class="ew-phone-row"><span>还需要</span><strong style="color:#9a5f16">确认检测日期</strong></div>',action:'继续关联'}
       };
 
-      const releaseVersion = {date:'2026-09-17 11:30',name:'工作台 V1.10 统一账本',change:'新增统一账本公共能力：以一个总入口连接交易、权益、积分和服务四类子账本；交易、权益、服务纳入 P0，积分仅预留结构。',status:'共创中'};
+      const releaseVersion = {date:'2026-09-17 10:10',name:'工作台 V1.9 桌面阅读优化',change:'桌面端建立舒适阅读字号层级：正文与导航提升至 13–14px，辅助标签不低于 11px，手机原型文字同步增强，但不整体缩放布局。',status:'共创中'};
       const versions = [
         releaseVersion,
-        {date:'2026-09-17 10:10',name:'工作台 V1.9 桌面阅读优化',change:'桌面端建立舒适阅读字号层级：正文与导航提升至 13–14px，辅助标签不低于 11px，手机原型文字同步增强，但不整体缩放布局。',status:'已记录'},
         {date:'2026-09-17 09:30',name:'工作台 V1.8 产品名称统一',change:'GitHub 页面标题、分享预览、工作台品牌和首页名称统一为“Everlife App 工作台”。',status:'已记录'},
         {date:'2026-09-17 01:00',name:'工作台 V1.7 健康记录中性入口',change:'已有健康记录用户默认只确认记录与可比信息，不预判正常或异常；完成时效、趋势与复查判断后再进入对应分支。',status:'已记录'},
         {date:'2026-09-17 00:45',name:'工作台 V1.6 首页决策规则',change:'八类代表用户由固定文案升级为“身份、数据、阶段、事件”驱动的首页规则；更新真实担忧、系统依据、首次回应和唯一重点任务。',status:'已记录'},
@@ -1184,8 +1176,8 @@
         {date:'2026-08-25 13:30',name:'三条参考旅程 V0.4',change:'验证本地体检、异地高价值、公域新客共用同一内核，通过配方改变首页与下一步。',status:'待确认'}
       ];
 
-      const STORAGE_KEY = 'everlife-design-workbench-v1.10';
-      const LEGACY_STORAGE_KEY = 'everlife-design-workbench-v1.9';
+      const STORAGE_KEY = 'everlife-design-workbench-v1.9';
+      const LEGACY_STORAGE_KEY = 'everlife-design-workbench-v1.8';
       const state = {page:'home',viewMode:'business',appTab:'health',openGroup:'',solutionUsersOpen:false,recipe:'J04',selected:'HOME-01',depth:'专项',goal:'managed-service',filter:'全部',query:'',added:[],dataFilter:'全部',dataQuery:'',dataSelected:'BO-01',dataTech:false,userState:{data:'usable',stage:'action',event:'service',identity:'managed'} };
       const byId = id => modules.find(m => m.id === id);
       const currentRecipe = () => recipes.find(r => r.id === state.recipe) || recipes[0];
@@ -1197,21 +1189,20 @@
         {id:'evidence',name:'健康证据',modules:['HD-01','HD-02','HD-03','HD-04','HD-06','AI-03']},
         {id:'catalog',name:'商品与服务',modules:['SV-01','SV-02','SV-03','CM-03']},
         {id:'transaction',name:'订单与支付',modules:['PAY-01','PAY-02','PAY-03','PAY-04','PAY-05','PAY-06','PAY-07','PAY-09']},
-        {id:'ledger',name:'统一账本',modules:['LG-00','LG-01','LG-02','LG-03','LG-04']},
         {id:'service',name:'项目与进度',modules:['SV-04','SV-05','SV-06','CM-04']},
         {id:'program',name:'方案与审核',modules:['IN-01','PL-03','PL-07','PL-08','PL-09']}
       ];
       const goalNames = {report:'看懂报告','free-plan':'开始一项行动','managed-service':'购买专项管理','product':'购买营养／健康商品',visit:'预约到访服务',membership:'开通会员'};
       const readiness = level => level==='L3' ? '可以交付' : level==='L2' ? '可以预览' : level==='L1' ? '需要补充' : '待业务确认';
       const businessNames = {
-        'ID-01':'登录 Everlife','ID-03':'同意使用哪些健康信息','ID-04':'正在整理健康信息','HOME-01':'首页重点任务','RT-01':'识别客户来自哪里','RT-02':'识别当前健康主题','RT-03':'判断风险与适合的服务','RT-04':'决定此刻最该做什么','RT-05':'匹配主题与服务','HD-01':'查看报告进度','HD-02':'先看报告结论','HD-04':'查看异常指标','IN-01':'一次补充少量信息','PL-09':'等待专业确认方案','SV-01':'选择需要的支持','SV-02':'确认服务是否适合','AI-02':'告诉用户回答依据','AI-04':'需要就医或人工时及时分流','CM-03':'主题商品与服务组合','PAY-05':'确认支付结果','LG-00':'汇总服务、权益与交易','LG-01':'记录每一笔交易变化','LG-02':'记录权益获得与使用','LG-03':'记录积分获得与使用','LG-04':'记录服务进度与剩余'
+        'ID-01':'登录 Everlife','ID-03':'同意使用哪些健康信息','ID-04':'正在整理健康信息','HOME-01':'首页重点任务','RT-01':'识别客户来自哪里','RT-02':'识别当前健康主题','RT-03':'判断风险与适合的服务','RT-04':'决定此刻最该做什么','RT-05':'匹配主题与服务','HD-01':'查看报告进度','HD-02':'先看报告结论','HD-04':'查看异常指标','IN-01':'一次补充少量信息','PL-09':'等待专业确认方案','SV-01':'选择需要的支持','SV-02':'确认服务是否适合','AI-02':'告诉用户回答依据','AI-04':'需要就医或人工时及时分流','CM-03':'主题商品与服务组合','PAY-05':'确认支付结果'
       };
       const displayName = module => state.viewMode==='business' ? (businessNames[module.id] || module.name) : module.name;
       const businessKind = kind => kind.includes('高风险')||kind.includes('安全') ? '需要专业或合规确认' : kind.includes('平台')||kind.includes('架构') ? '系统自动完成' : kind.includes('业务')||kind.includes('候选')||kind.includes('探索') ? '需要业务补充' : '用户可见页面或功能';
 
       function captureWorkspace() {
         return {
-          workbench_version:'1.10',
+          workbench_version:'1.9',
           saved_at:new Date().toISOString(),
           state:{...state,added:[...state.added]},
           recipes:recipes.map(r=>({...r,modules:[...r.modules]})),
@@ -1342,7 +1333,7 @@
         root.querySelector('#ew-detail-type').textContent = state.viewMode==='business' ? businessKind(m.kind) : m.kind;
         root.querySelector('#ew-detail-maturity').textContent = state.viewMode==='business' ? readiness(m.maturity) : `${m.maturity} · ${readiness(m.maturity)}`;
         root.querySelector('#ew-detail-deps').textContent = state.viewMode==='business' ? m.input : m.deps;
-        root.querySelector('#ew-detail-tab').textContent = m.domain === '统一账本' ? '公共能力 → 常青客汇总' : m.domain === '支付与交易' ? '公共交易流程 → 常青客' : m.domain === '会员与商业' && m.id !== 'CM-03' ? '常青客 / 公共能力' : m.id === 'CM-03' ? '健康 NOW / 常青里供给' : '健康 NOW / 公共能力';
+        root.querySelector('#ew-detail-tab').textContent = m.domain === '支付与交易' ? '公共交易流程 → 常青客' : m.domain === '会员与商业' && m.id !== 'CM-03' ? '常青客 / 公共能力' : m.id === 'CM-03' ? '健康 NOW / 常青里供给' : '健康 NOW / 公共能力';
         const toggle = root.querySelector('[data-action="toggle-module"]');
         const included = activeModuleIds().includes(m.id);
         toggle.textContent = included ? '从当前旅程移除' : '加入当前旅程';
@@ -1381,7 +1372,7 @@
         state.appTab=tab;
         root.querySelectorAll('[data-app-tab]').forEach(button=>button.classList.toggle('is-active',button.dataset.appTab===tab));
         if (tab==='member') {
-          ['MB-01','MB-02','LG-00','LG-01','LG-02','LG-04','SV-05','SV-06'].forEach(id=>{if(!activeModuleIds().includes(id) && !state.added.includes(id)) state.added.push(id);});
+          ['MB-01','MB-02','SV-05','SV-06'].forEach(id=>{if(!activeModuleIds().includes(id) && !state.added.includes(id)) state.added.push(id);});
           state.selected='MB-01';
           toast('已切换到常青客必要能力');
         } else {
@@ -1612,10 +1603,10 @@
         if (goal!=='report') modulesForJourney.push('RT-02','RT-03','RT-04','SV-01');
         if (goal==='report') modulesForJourney.push('AI-01','RT-04');
         if (goal==='free-plan') modulesForJourney.push('ACT-01','PL-01','PL-03','PL-05','PL-08','AI-01','NT-01');
-        if (goal==='managed-service') modulesForJourney.push('SV-02','SV-03','PAY-01','PAY-02','PAY-03','PAY-04','PAY-05','PAY-06','LG-01','LG-04','SV-05','SV-06','AI-01');
-        if (goal==='product') modulesForJourney.push('ACT-01','PL-01','SUP-01','SUP-02','SV-02','CM-03','PAY-01','PAY-02','PAY-03','PAY-04','PAY-05','PAY-06','LG-01','CM-04','AI-01');
+        if (goal==='managed-service') modulesForJourney.push('SV-02','SV-03','PAY-01','PAY-02','PAY-03','PAY-04','PAY-05','PAY-06','SV-05','SV-06','AI-01');
+        if (goal==='product') modulesForJourney.push('ACT-01','PL-01','SUP-01','SUP-02','SV-02','CM-03','PAY-01','PAY-02','PAY-03','PAY-04','PAY-05','PAY-06','CM-04','AI-01');
         if (goal==='visit') modulesForJourney.push('SV-02','SV-03','SV-04','PAY-01','PAY-02','PAY-03','PAY-04','PAY-05','PAY-06','SV-05','NT-01');
-        if (goal==='membership') modulesForJourney.push('MB-01','MB-02','PAY-01','PAY-02','PAY-03','PAY-04','PAY-05','PAY-06','LG-00','LG-01','LG-02','LG-04','PAY-09');
+        if (goal==='membership') modulesForJourney.push('MB-01','MB-02','PAY-01','PAY-02','PAY-03','PAY-04','PAY-05','PAY-06','PAY-09');
 
         const recipe=currentRecipe();
         recipe.modules=uniqueSequence(modulesForJourney);
@@ -1739,7 +1730,7 @@
             const payload={...captureWorkspace(),versions}; downloadJson(payload,'everlife-workbench-backup.json'); toast('工作台备份已导出');
           }
           if (action.dataset.action==='export') {
-            const payload={workbench_version:'1.10',scenario:currentRecipe().id,title:currentRecipe().title,config:{source:root.querySelector('#ew-source').value,theme:root.querySelector('#ew-theme').value,service_template:root.querySelector('#ew-service').value,service_stage:root.querySelector('#ew-stage').value,support_level:state.depth,data:root.querySelector('#ew-data').value,goal:state.goal},prototype_screens:prototypeModuleIds(),journey_steps:activeModuleIds().map(id=>{const m=byId(id);return{id:m.id,name:m.name,readiness:readiness(m.maturity),technical_level:m.maturity,visible_in_prototype:isPrototypeScreen(m),dependencies:m.deps};})};
+            const payload={workbench_version:'1.9',scenario:currentRecipe().id,title:currentRecipe().title,config:{source:root.querySelector('#ew-source').value,theme:root.querySelector('#ew-theme').value,service_template:root.querySelector('#ew-service').value,service_stage:root.querySelector('#ew-stage').value,support_level:state.depth,data:root.querySelector('#ew-data').value,goal:state.goal},prototype_screens:prototypeModuleIds(),journey_steps:activeModuleIds().map(id=>{const m=byId(id);return{id:m.id,name:m.name,readiness:readiness(m.maturity),technical_level:m.maturity,visible_in_prototype:isPrototypeScreen(m),dependencies:m.deps};})};
             downloadJson(payload,`everlife-${currentRecipe().id.toLowerCase()}-handoff.json`); toast('已导出当前场景的交付清单');
           }
           if (action.dataset.action==='export-dictionary') {
